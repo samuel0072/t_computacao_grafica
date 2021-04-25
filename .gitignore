@@ -1,5 +1,11 @@
+#project
+
+*.out
+
+
 # Prerequisites
 *.d
+
 
 # Object files
 *.o
