@@ -130,10 +130,10 @@ void moveCamSpec(int key, int x, int y) {
             break;
 
         case GLUT_KEY_LEFT:
-            rotateCamLeft(cam);
+            rotateNAboutVACW(cam);
             break;
         case GLUT_KEY_RIGHT:
-            rotateCamRight(cam);
+            rotateNAboutVCW(cam);
             break;
     }
     display();
@@ -147,10 +147,16 @@ void draw_axis(){
 	glLineWidth(width);
 	glColor3f(1.0f, 0.0f, 0.0f);
 	draw_line(0.0f, 0.0f, 0.0f, 100, 0.0f, 0.0f);	
+    glColor3f(1.0f, 0.0f, 0.0f);
+	draw_line(0.0f, 0.0f, 0.0f, -100, 0.0f, 0.0f);
 	glColor3f(0.0f, 1.0f, 0.0f);
 	draw_line(0.0f, 0.0f, 0.0f, 0.0f, 100, 0.0f);
+    glColor3f(0.0f, 1.0f, 0.0f);
+	draw_line(0.0f, 0.0f, 0.0f, 0.0f, -100, 0.0f);
 	glColor3f(0.0f, 0.0f, 1.0f);
 	draw_line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 100);
+    glColor3f(0.0f, 0.0f, 1.0f);
+	draw_line(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -100);
 }
 
 void draw_line(float x0, float y0, float z0, float x1, float y1, float z1){
@@ -273,7 +279,13 @@ void display() {
     glPushMatrix();
     draw_axis();
     glPopMatrix();
+    glPushMatrix();
     draw_cube();
+    glPopMatrix();
+    glColor3f (0.5 , 0.5 , 0.5 ) ;
+    draw_line(5+cam_pos[C_X] , 5+cam_pos[C_Y] , 5+cam_pos[C_Z],
+     cam_pos[C_X] , cam_pos[C_Y] , cam_pos[C_Z]);
+
 
 
     /*glPushMatrix();

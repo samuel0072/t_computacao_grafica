@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #define CAM_MV_SPEED  0.1f//velocidade de movimento em unidades do mundo
-#define CAM_ROT_SPEED 0.174533 //angulo de rotação em radianos
+#define CAM_ROT_SPEED 0.0872665//angulo de rotação em radianos
 
 #define X 0
 #define Y 1
@@ -67,10 +67,10 @@ Rotacionamos o vetor view ao redor do vetor normal para girar a camera para esqu
 rotacionamos o vetor view e normal para girar a camera para cima/baixo
 */
 
-//Rotaciona o vetor v ao redor do vetor n no sentido horário
+//Rotaciona o vetor v ao redor do eixo y no sentido antihorário
 void rotateCamLeft(Camera* c);
 
-//Rotaciona o vetor v ao redor do vetor n no sentido antihorário
+//Rotaciona o vetor v ao redor do eixo yno sentido horário
 void rotateCamRight(Camera* c);
 
 //Rotaciona o vetor v e o vetor n ao redor do vetor s no sentido horário
@@ -78,5 +78,11 @@ void rotateCamUp(Camera* c);
 
 //Rotaciona o vetor v e o vetor n ao redor do vetor s no sentido antihorário
 void rotateCamDown(Camera* c);
+
+//Rotaciona o vetor n ao redor do vetor v no sentido horário
+void rotateNAboutVCW(Camera* c);
+
+//Rotaciona o vetor n ao redor do vetor v no sentido horário
+void rotateNAboutVACW(Camera* c );
 
 #endif
