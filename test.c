@@ -3,32 +3,24 @@
 #include <stdio.h>
 #include <math.h>
 #include "camera.h"
+#include "obj_import.h"
 
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
-#define C_X 0
-#define C_Y 1
-#define C_Z 2
 #define SENSIBILITY 100.0f
+#define MODEL_QUANT 5
 
 
-//gcc test.c camera.c -o test.out -IGL -IGLU -IGLUT -lglut -lGL -lGLU -lm
+//gcc test.c camera.c obj_import.o -o test.out -IGL -IGLU -IGLUT -lglut -lGL -lGLU -lm
 
-typedef struct Vertex
-{
-    float x , y , z ;//corrdenadas do vertice
-    float r , g , b ;//cor
-} Vertex;
+typedef struct Vecs Vecs;
 
-
-
-Vertex vertices [] = { 
-        { -0.5f , -0.5f , 0.0f , 1.0f , 0.0f , 0.0f } ,
-        {0.0f , 0.5f , 0.0f , 0.0f , 1.0f , 0.0f } ,
-        {0.5f , -0.5f , 0.0f , 0.0f , 0.0f , 1.0f }
-    };
-
-float fov_y ;
+struct Vecs {
+    Vec3 *VERTICES;
+    Vec3 *NORMALS;
+    Vec2 *TEX_COORDS;
+    int VERTEX_COUNT;
+};
 
 float* cam_pos;
 float* cam_center;
@@ -38,10 +30,10 @@ int old_x, old_y;
 
 // Variaveis para posicionar a parede
 float parede_x , parede_y , parede_z ; // posicao da parede
-float parede_rotacao ; // rotacao da parede
 float parede_largura , parede_altura , parede_espessura ; 
 
 Camera* cam;
+Vecs** vecs;
 
 void display();
 void moveCam(unsigned char key, int x, int y);
@@ -51,6 +43,11 @@ void draw_cube();
 void mouse_func(int button, int state, int x, int y);
 
 void draw_line(float x0, float y0, float z0, float x1, float y1, float z1);
+
+void load_obj_display(const char* path, int index);
+
+void draw_objects(int index, float r, float g, float b);
+void init_obj_vecs();
 
 int main(int argc, char** argv) {
     
@@ -69,7 +66,6 @@ int main(int argc, char** argv) {
     parede_altura = 3.0f ; // 3m
     parede_espessura = 0.3f ; // 30 cm
     parede_largura = 4.0f ; // 4m
-    parede_rotacao = 45.0f ;
     parede_x = 0.0f ;
     parede_y = 1.5f ; // metade da altura
     parede_z = 1.0f ;
@@ -77,7 +73,17 @@ int main(int argc, char** argv) {
     * center representa o ponto que estamos olhando ,
     * nesse caso sera o centro da parede
     */
-   
+
+    /*init_vecs();
+
+    load_obj("./models/casa.obj");*/
+
+    init_obj_vecs();
+    load_obj_display("./models/casa.obj", 0);
+    load_obj_display("./models/cama.obj", 1);
+    load_obj_display("./models/caneca.obj", 2);
+    load_obj_display("./models/cadeira.obj", 3);
+    //load_obj_display("./models/mesa.obj", 4);
 
 
     glutDisplayFunc(display);
@@ -114,7 +120,7 @@ void moveCam(unsigned char key, int x, int y) {
             moveCamUp(cam);
             break;        
     }
-    display();
+    glutPostRedisplay();
     //printf("(%.2f, %.2f, %.2f)\n", cam_pos[0], cam_pos[1], cam_pos[2]);
     
 
@@ -136,11 +142,52 @@ void moveCamSpec(int key, int x, int y) {
             rotateNAboutVCW(cam);
             break;
     }
-    display();
+    glutPostRedisplay();
     
     
 }
 
+void mouse_func(int button, int state, int x, int y) {
+    if(state == GLUT_DOWN) {
+        old_x = x;
+        old_y = y;
+    }
+    else if(state == GLUT_UP) {
+        int diff_x = old_x - x;
+        int diff_y = old_y - y;
+        old_x = x;
+        old_y = y;
+        int i;
+        int quant_x = abs(diff_x/SENSIBILITY);
+        int quant_y = abs(diff_y/SENSIBILITY);
+
+        printf("%d %d\n", quant_x, quant_y);
+
+        if(diff_x > 0) {
+            for(i = 0; i < quant_x; i++) {
+                rotateCamRight(cam);
+            }
+        }
+        if(diff_x < 0) {
+            for(i = 0; i < quant_x; i++) {
+                rotateCamLeft(cam);
+            }
+        }
+
+        if(diff_y > 0) {
+            for(i = 0; i < quant_y; i++) {
+                rotateCamUp(cam);
+            }
+        }
+        if(diff_y < 0) {
+            for(i = 0; i < quant_y; i++) {
+                rotateCamDown(cam);
+            }
+        }
+        glutPostRedisplay();
+    }
+
+}
 
 void draw_axis(){
 	float width = 1.5f;
@@ -247,22 +294,11 @@ void display() {
     
 
     int i ;
-    Vertex v ;
-
-    /*glBegin ( GL_TRIANGLES ) ;
-    for( i = 0; i < sizeof ( vertices ) ; i ++)
-    {
-        v = vertices [ i ];
-        glColor3f ( v .r , v .g , v . b ) ;
-        glVertex3f ( v .x , v .y , v . z ) ;
-    }
-    glEnd () ;*/
 
 
-    fov_y = 75.0f ; // 75 graus
     glMatrixMode ( GL_PROJECTION ) ;
     glLoadIdentity () ;
-    gluPerspective ( fov_y , 1.0f * WINDOW_WIDTH / WINDOW_HEIGHT ,
+    gluPerspective ( FOV , 1.0f * WINDOW_WIDTH / WINDOW_HEIGHT ,
     0.001f , 1000.0f ) ;
 
 
@@ -270,8 +306,8 @@ void display() {
     cam_center = getCamCenter(cam);
     cam_nv = getCamNV(cam);
 
-    gluLookAt( cam_pos[C_X] , cam_pos[C_Y] , cam_pos[C_Z] , cam_center[C_X] , cam_center[C_Y] ,
-    cam_center[C_Z] , cam_nv[C_X] , cam_nv[C_Y] , cam_nv[C_Z] ) ;
+    gluLookAt( cam_pos[X] , cam_pos[Y] , cam_pos[Z] , cam_center[X] , cam_center[Y] ,
+    cam_center[Z] , cam_nv[X] , cam_nv[Y] , cam_nv[Z] ) ;
     
     glMatrixMode ( GL_MODELVIEW ) ;
     glLoadIdentity () ;
@@ -279,12 +315,58 @@ void display() {
     glPushMatrix();
     draw_axis();
     glPopMatrix();
-    glPushMatrix();
-    draw_cube();
+    //glPushMatrix();
+    //draw_cube();
+    //glPopMatrix();
+    //glColor3f (0.5 , 0.5 , 0.5 ) ;
+    //glTranslatef ( 0 , 0 , 0 ) ;
+   
+    /*glPushMatrix();
+    load_obj_display("./models/casa.obj");
     glPopMatrix();
-    glColor3f (0.5 , 0.5 , 0.5 ) ;
-    draw_line(5+cam_pos[C_X] , 5+cam_pos[C_Y] , 5+cam_pos[C_Z],
-     cam_pos[C_X] , cam_pos[C_Y] , cam_pos[C_Z]);
+    VERTEX_COUNT = 0;
+    glPushMatrix();
+    load_obj_display("./models/cama.obj");
+    glPopMatrix();
+    VERTEX_COUNT = 0;*/
+    
+    /*glPushMatrix();
+    
+    load_obj_display("./models/mesa.obj");
+    glPopMatrix();
+    VERTEX_COUNT = 0;*/
+    glPushMatrix();
+    
+    glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
+    glTranslatef ( 0 , 10 , 0 ) ;
+    draw_objects(0, 0.5, 0.5, 0.5);
+    glPopMatrix();
+
+    glPushMatrix();
+    //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
+    glScalef(5.0,5.0,5.0);
+    draw_objects(1, 1, 0, 0);
+    glPopMatrix();
+
+    glPushMatrix();
+    //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
+    draw_objects(2, 0, 1, 0);
+    glPopMatrix();
+
+    /*glPushMatrix();
+    //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
+    draw_objects(3, 0, 0, 1);
+    glPopMatrix();*/
+
+    
+
+
+    
+    /*glPushMatrix();
+    load_obj_display("./models/caneca.obj");
+    glPopMatrix();
+    VERTEX_COUNT = 0;*/
+
 
 
 
@@ -300,7 +382,7 @@ void display() {
     glPushMatrix();
     glLoadIdentity () ;
     glTranslatef ( parede_x , parede_y , parede_z ) ;
-    //glRotatef ( parede_rotacao , 0.0f , 1.0f , 0.0f ) ;
+    
     glScalef ( parede_largura , parede_altura , parede_espessura );
     glColor3f ( 1.0f , 1.0f , 0.0f ) ;
     glutSolidCube (1 ) ;
@@ -312,45 +394,56 @@ void display() {
     glutSwapBuffers () ;
 }
 
+void load_obj_display(const char* path, int index) {
+    int i;
 
-void mouse_func(int button, int state, int x, int y) {
-    if(state == GLUT_DOWN) {
-        old_x = x;
-        old_y = y;
+    if(0 <= index < MODEL_QUANT) {
+        init_vecs();
+        load_obj(path);
+        vecs[index]->VERTICES = VERTICES;
+        vecs[index]->NORMALS = NORMALS;
+        vecs[index]->TEX_COORDS = TEX_COORDS;
+        vecs[index]->VERTEX_COUNT = VERTEX_COUNT;
+        
     }
-    else if(state == GLUT_UP) {
-        int diff_x = old_x - x;
-        int diff_y = old_y - y;
-        old_x = x;
-        old_y = y;
+    else {
+        printf("Indice fora do range permitido: (0, %d)", MODEL_QUANT);
+        exit(1);
+    }
+
+    
+    
+}
+
+void draw_objects(int index, float r, float g, float b) {
+    if(0 <= index < MODEL_QUANT) {
         int i;
-        int quant_x = abs(diff_x/SENSIBILITY);
-        int quant_y = abs(diff_y/SENSIBILITY);
+       
+        VERTICES = vecs[index]->VERTICES;
+        NORMALS = vecs[index]->NORMALS ;
+        TEX_COORDS = vecs[index]->TEX_COORDS;
+        VERTEX_COUNT = vecs[index]->VERTEX_COUNT;
 
-        printf("%d %d\n", quant_x, quant_y);
-
-        if(diff_x > 0) {
-            for(i = 0; i < quant_x; i++) {
-                rotateCamRight(cam);
-            }
-        }
-        if(diff_x < 0) {
-            for(i = 0; i < quant_x; i++) {
-                rotateCamLeft(cam);
-            }
-        }
-
-        if(diff_y > 0) {
-            for(i = 0; i < quant_y; i++) {
-                rotateCamUp(cam);
-            }
-        }
-        if(diff_y < 0) {
-            for(i = 0; i < quant_y; i++) {
-                rotateCamDown(cam);
-            }
-        }
-        display();
+        glBegin(GL_TRIANGLES);
+	    for(i = 0;i < VERTEX_COUNT;i++){
+            glColor3f (r , g , b ) ;
+            glNormal3f(NORMALS[i].x, NORMALS[i].y, NORMALS[i].z);
+            glTexCoord2f(TEX_COORDS[i].x, TEX_COORDS[i].y);
+            glVertex3f(VERTICES[i].x, VERTICES[i].y, VERTICES[i].z);
+	    }
+	    glEnd();
+        
     }
+    else {
+        printf("Indice fora do range permitido: [0, %d)", MODEL_QUANT);
+        exit(1);
+    }
+}
 
+void init_obj_vecs() {
+    int i;
+    vecs = (Vecs**)malloc(MODEL_QUANT*sizeof(Vecs*));
+    for(i = 0; i < MODEL_QUANT; i++) {
+        vecs[i] = (Vecs*)malloc(sizeof(Vecs));
+    }
 }

@@ -110,6 +110,10 @@ void turnCamBack(Camera* c) {
     //c->v_y = -  c->v_y;
     c->v_z = -  c->v_z;
 
+    c->s_x = - c->s_x;
+    //c->s_y = -  c->s_y;
+    c->s_z = -  c->s_z;
+
 }
 
 
