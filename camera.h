@@ -85,4 +85,5 @@ void rotateNAboutVCW(Camera* c);
 //Rotaciona o vetor n ao redor do vetor v no sentido horário
 void rotateNAboutVACW(Camera* c );
 
+void resetOrgDir(Camera* c);
 #endif

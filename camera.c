@@ -269,3 +269,16 @@ void cross_v_u(float v[], float u[], float output[]) {
     output[Z] = (v[X]*u[Y]) - (u[X]*v[Y]);
 
 }
+
+void resetOrgDir(Camera* c) {
+    //Volta os vetores ao estado inicial
+    c->n_x = 0;
+    c->n_y = 1;
+    c->n_z = 0;
+
+    c->v_x = 0;
+    c->v_y = 0;
+    c->v_z = 1;
+
+    updateSvec(c);
+}
