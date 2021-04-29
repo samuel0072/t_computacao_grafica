@@ -2,8 +2,8 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include <math.h>
-#include "camera.h"
-#include "obj_import.h"
+#include "headers/camera.h"
+#include "headers/obj_import.h"
 
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
