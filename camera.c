@@ -139,7 +139,7 @@ void rotateCamRight(Camera* c) {
     yxv[Z] *= sin_rot;
 
     c->v_x = v_scaled[X] + yxv[X] + 0*const3;//o vetor Y é 0 na cord x
-    //c->v_y = v_scaled[Y] + yxv[Y] + 1*const3;//o vetor Y é 1 na cord y
+    c->v_y = v_scaled[Y] + yxv[Y] + 1*const3;//o vetor Y é 1 na cord y
     c->v_z = v_scaled[Z] + yxv[Z] + 0*const3;//o vetor Y é 0 na cord z
 
     /*
@@ -174,7 +174,7 @@ void rotateCamLeft(Camera* c) {
     yxv[Z] *= sin_rot;
 
     c->v_x = v_scaled[X] + yxv[X] + 0*const3;//o vetor Y é 0 na cord x
-    //c->v_y = v_scaled[Y] + yxv[Y] + 1*const3;//o vetor Y é 1 na cord y
+    c->v_y = v_scaled[Y] + yxv[Y] + 1*const3;//o vetor Y é 1 na cord y
     c->v_z = v_scaled[Z] + yxv[Z] + 0*const3;//o vetor Y é 0 na cord z
 
     /*
