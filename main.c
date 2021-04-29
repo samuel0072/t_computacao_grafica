@@ -9,10 +9,18 @@
 #define WINDOW_HEIGHT 768
 #define SENSIBILITY 100.0f
 #define MODEL_QUANT 10
+
 #define LEFT_DIR 1
 #define RIGHT_DIR -1
 #define PI 3.14
 #define RAD_TO_GRAD(c) c*180/PI
+
+#define DEBUG
+#ifdef DEBUG
+#define D(x) x
+#else
+#define D(x)
+#endif
 
 //gcc test.c camera.c obj_import.o -o test.out -IGL -IGLU -IGLUT -lglut -lGL -lGLU -lm
 
@@ -133,7 +141,6 @@ void moveCam(unsigned char key, int x, int y) {
             break;  
     }
     glutPostRedisplay();
-    //printf("(%.2f, %.2f, %.2f)\n", cam_pos[0], cam_pos[1], cam_pos[2]);
     
 
 }
@@ -173,7 +180,7 @@ void mouse_func(int button, int state, int x, int y) {
         int quant_x = abs(diff_x/SENSIBILITY);
         int quant_y = abs(diff_y/SENSIBILITY);
 
-        printf("%d %d\n", quant_x, quant_y);
+
 
         if(diff_x > 0) {
             ROT_DIR = RIGHT_DIR;
@@ -262,6 +269,7 @@ void draw_axis_ticks() {
 	    glEnd();
     }
 }
+
 void draw_cube() {
     glBegin(GL_QUADS);
         glColor3f (0.5 , 0.5 , 0.5 ) ;
@@ -362,21 +370,24 @@ void display() {
     glLoadIdentity () ;
     glRotatef ( ROT_ANGLE, 0.0f , 1.0f , 0.0f ) ;
 
-    glPushMatrix();
+    
+    D(glPushMatrix();
     draw_axis();
     glPopMatrix();
 
     glPushMatrix();
     draw_axis_ticks();
-    glPopMatrix();
+    glPopMatrix();)
     //glPushMatrix();
     //draw_cube();
     //glPopMatrix();
     //glColor3f (0.5 , 0.5 , 0.5 ) ;
     //glTranslatef ( 0 , 0 , 0 ) ;
-   
+
 
     glPushMatrix();
+
+    
     
     //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
     glTranslatef ( 0 , -10 , 0 ) ;
