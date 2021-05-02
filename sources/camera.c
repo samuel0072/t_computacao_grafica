@@ -202,9 +202,9 @@ void rotateCamUp(Camera* c) {
     c->v_z = cos_rot *c->v_z + sin_rot * c->n_z;
 
     //O vetor n está rotacionando se aproximando de -v
-    c->n_x = cos_rot *c->n_x + sin_rot * (vx);
-    c->n_y = cos_rot *c->n_y + sin_rot * (vy);
-    c->n_z = cos_rot *c->n_z + sin_rot * (vz);
+    //c->n_x = cos_rot *c->n_x + sin_rot * (vx);
+    //c->n_y = cos_rot *c->n_y + sin_rot * (vy);
+    //c->n_z = cos_rot *c->n_z + sin_rot * (vz);
 
 }
 
@@ -224,9 +224,9 @@ void rotateCamDown(Camera* c) {
     c->v_z = cos_rot*c->v_z + sin_rot* c->n_z;
 
     //O vetor n está rotacionando se aproximando de -v
-    c->n_x = cos_rot*c->n_x + sin_rot* (vx);
-    c->n_y = cos_rot*c->n_y + sin_rot* (vy);
-    c->n_z = cos_rot*c->n_z + sin_rot* (vz);
+    //c->n_x = cos_rot*c->n_x + sin_rot* (vx);
+    //c->n_y = cos_rot*c->n_y + sin_rot* (vy);
+    //c->n_z = cos_rot*c->n_z + sin_rot* (vz);
 }
 
 
