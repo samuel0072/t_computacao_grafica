@@ -72,13 +72,13 @@ rotacionamos o vetor view e normal para girar a camera para cima/baixo
 //Rotaciona o vetor v ao redor do eixo y no sentido antihorário
 void rotateCamLeft(Camera* c);
 
-//Rotaciona o vetor v ao redor do eixo yno sentido horário
+//Rotaciona o vetor v ao redor do eixo y no sentido horário
 void rotateCamRight(Camera* c);
 
-//Rotaciona o vetor v e o vetor n ao redor do vetor s no sentido horário
+//Rotaciona o vetor v  ao redor do vetor s no sentido horário
 void rotateCamUp(Camera* c);
 
-//Rotaciona o vetor v e o vetor n ao redor do vetor s no sentido antihorário
+//Rotaciona o vetor v ao redor do vetor s no sentido antihorário
 void rotateCamDown(Camera* c);
 
 //Rotaciona o vetor n ao redor do vetor v no sentido horário
