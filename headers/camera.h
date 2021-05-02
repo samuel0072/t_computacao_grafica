@@ -3,6 +3,8 @@
 
 #define CAM_MV_SPEED  1.0f//velocidade de movimento em unidades do mundo
 #define CAM_ROT_SPEED 0.0174533//angulo de rotação em radianos
+#define MAX_GRAD 0.0872665 //Angulo máximo que a camera pode girar para cima/baixo em radianos(85°)
+#define MIN_GRAD 3.05433
 #define FOV 75.0f
 #define X 0
 #define Y 1
