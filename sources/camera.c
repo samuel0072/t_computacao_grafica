@@ -153,7 +153,6 @@ void rotateCamRight(Camera* c) {
 } 
 
 void rotateCamLeft(Camera* c) {
-
     double cos_rot = cos(-CAM_ROT_SPEED);
     double sin_rot = sin(-CAM_ROT_SPEED);
     //Esse código rotaciona ao redor do eixo Y
@@ -189,44 +188,63 @@ void rotateCamLeft(Camera* c) {
 
 void rotateCamUp(Camera* c) {
 
-    float vx, vy, vz;
-    double cos_rot = cos(CAM_ROT_SPEED);
-    double sin_rot = sin(CAM_ROT_SPEED);
-    vx = -c->v_x;
-    vy = -c->v_y;
-    vz = -c->v_z;
+    float cos_nv = c->n_x*c->v_x+ c->n_y*c->v_y + c->n_z*c->v_z;
+    float ang = acos(cos_nv);
+    float norma = sqrt(c->v_x*c->v_x+ c->v_y*c->v_y + c->v_z*c->v_z);
+    printf("%.2f %.2f %.2f\n", cos_nv, ang, norma);
 
-    //O vetor v está rotacionando se aproximando de n
-    c->v_x = cos_rot *c->v_x + sin_rot * c->n_x;
-    c->v_y = cos_rot *c->v_y + sin_rot * c->n_y;
-    c->v_z = cos_rot *c->v_z + sin_rot * c->n_z;
+    if(ang >= MAX_GRAD) {
+        double cos_rot = cos(CAM_ROT_SPEED);
+        double sin_rot = sin(CAM_ROT_SPEED);
 
-    //O vetor n está rotacionando se aproximando de -v
-    //c->n_x = cos_rot *c->n_x + sin_rot * (vx);
-    //c->n_y = cos_rot *c->n_y + sin_rot * (vy);
-    //c->n_z = cos_rot *c->n_z + sin_rot * (vz);
+        float cons = (1 - cos_rot) * (c->s_x*c->v_x+ c->s_y*c->v_y + c->s_z*c->v_z);
+        float v_scaled[3] = {c->v_x*cos_rot, c->v_y*cos_rot, c->v_z*cos_rot};
+        float sxv[3];
+        float s[] = {c->s_x, c->s_y, c->s_z};
+        float v[] = {c->v_x, c->v_y, c->v_z};
+        cross_v_u(s, v, sxv);
+        sxv[X] *= sin_rot; 
+        sxv[Y] *= sin_rot; 
+        sxv[Z] *= sin_rot; 
 
+        c->v_x = v_scaled[X] + sxv[X] + cons*c->s_x;
+        c->v_y = v_scaled[Y] + sxv[Y] + cons*c->s_y;
+        c->v_z = v_scaled[Z] + sxv[Z] + cons*c->s_z;
+    }
+
+    
+    
 }
 
 void rotateCamDown(Camera* c) {
-    float vx, vy, vz;
-    double cos_rot, sin_rot;
-    cos_rot = cos(-CAM_ROT_SPEED);
-    sin_rot = sin(-CAM_ROT_SPEED);
+    float cos_nv = c->n_x*c->v_x+ c->n_y*c->v_y + c->n_z*c->v_z;
+    float ang = acos(cos_nv);
+    float norma = sqrt(c->v_x*c->v_x+ c->v_y*c->v_y + c->v_z*c->v_z);
+    printf("%.2f %.2f %.2f\n", cos_nv, ang, norma);  
 
-    vx = -c->v_x;
-    vy = -c->v_y;
-    vz = -c->v_z;
+    if (ang <= MIN_GRAD)
+    {
+        double cos_rot, sin_rot;
+        cos_rot = cos(-CAM_ROT_SPEED);
+        sin_rot = sin(-CAM_ROT_SPEED);
 
-    //O vetor v está rotacionando se aproximando de n
-    c->v_x = cos_rot*c->v_x + sin_rot* c->n_x;
-    c->v_y = cos_rot*c->v_y + sin_rot* c->n_y;
-    c->v_z = cos_rot*c->v_z + sin_rot* c->n_z;
+        float cons = (1 - cos_rot) * (c->s_x*c->v_x+ c->s_y*c->v_y + c->s_z*c->v_z);
+        float v_scaled[3] = {c->v_x*cos_rot, c->v_y*cos_rot, c->v_z*cos_rot};
+        float sxv[3];
+        float s[] = {c->s_x, c->s_y, c->s_z};
+        float v[] = {c->v_x, c->v_y, c->v_z};
+        cross_v_u(s, v, sxv);
+        sxv[X] *= sin_rot; 
+        sxv[Y] *= sin_rot; 
+        sxv[Z] *= sin_rot; 
 
-    //O vetor n está rotacionando se aproximando de -v
-    //c->n_x = cos_rot*c->n_x + sin_rot* (vx);
-    //c->n_y = cos_rot*c->n_y + sin_rot* (vy);
-    //c->n_z = cos_rot*c->n_z + sin_rot* (vz);
+        c->v_x = v_scaled[X] + sxv[X] + cons*c->s_x;
+        c->v_y = v_scaled[Y] + sxv[Y] + cons*c->s_y;
+        c->v_z = v_scaled[Z] + sxv[Z] + cons*c->s_z;
+    }
+    
+   
+
 }
 
 
@@ -251,6 +269,7 @@ void rotateNAboutVACW(Camera* c ) {
 
     updateSvec(c);
 }
+
 void updateSvec(Camera* c) {
     //atualiza o vetor s da camera
     float* cords = (float*)malloc(3*sizeof(float));
