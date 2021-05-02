@@ -22,8 +22,6 @@
 #define D(x)
 #endif
 
-//gcc test.c camera.c obj_import.o -o test.out -IGL -IGLU -IGLUT -lglut -lGL -lGLU -lm
-
 typedef struct Vecs Vecs;
 
 struct Vecs {
@@ -37,33 +35,33 @@ float* cam_pos;
 float* cam_center;
 float* cam_nv;
 
-int old_x, old_y;
+int old_x = 0, old_y = 0;
 
-// Variaveis para posicionar a parede
-float parede_x , parede_y , parede_z ; // posicao da parede
-float parede_largura , parede_altura , parede_espessura ; 
 
 Camera* cam;
 Vecs** vecs;
-int ROT_TIMES = 0;
-int ROT_DIR = LEFT_DIR;
-int ROT_ANGLE = 0;
+
+int ROT_WINDOW = 0;//flag para girar a janela
+float ROT_W_ANGLE = 0;//angulo de rotação da janela em graus
+int ROT_W_DIR = 1;//Direção de rotação da janela:horário, antihorário
+
 
 void display();
+
 void moveCam(unsigned char key, int x, int y);
 void moveCamSpec(int key, int x, int y);
-void draw_axis();
-void draw_cube();
-void mouse_func(int button, int state, int x, int y);
-
-void draw_line(float x0, float y0, float z0, float x1, float y1, float z1);
+void mouse_func( int x, int y);
+void pass_mouse_func(int x, int y);
 
 void load_obj_display(const char* path, int index);
-
-void draw_objects(int index, float r, float g, float b);
 void init_obj_vecs();
 
 void draw_axis_ticks();
+void draw_window();
+void draw_objects(int index, float r, float g, float b);
+void draw_line(float x0, float y0, float z0, float x1, float y1, float z1);
+void draw_axis();
+void draw_cube();
 
 int main(int argc, char** argv) {
     
@@ -95,9 +93,9 @@ int main(int argc, char** argv) {
     load_obj("./models/casa.obj");*/
 
     init_obj_vecs();
-    load_obj_display("./models/casa.obj", 0);
+    /*load_obj_display("./models/casa.obj", 0);
     load_obj_display("./models/cama.obj", 1);
-    load_obj_display("./models/caneca.obj", 2);
+    load_obj_display("./models/caneca.obj", 2);*/
     load_obj_display("./models/janela.obj", 3);
     //load_obj_display("./models/mesa.obj", 4);
 
@@ -105,7 +103,8 @@ int main(int argc, char** argv) {
     glutDisplayFunc(display);
     glutKeyboardFunc(moveCam);
     glutSpecialFunc(moveCamSpec);
-    glutMouseFunc(mouse_func);
+    glutMotionFunc(mouse_func);
+    glutPassiveMotionFunc(pass_mouse_func); 
     glutMainLoop();
     return 0;
 }
@@ -139,6 +138,9 @@ void moveCam(unsigned char key, int x, int y) {
             resetOrgDir(cam);
             ROT_ANGLE = 0;
             break;  
+        case 'g':
+            ROT_WINDOW = 1;
+            break;
     }
     glutPostRedisplay();
     
@@ -155,10 +157,10 @@ void moveCamSpec(int key, int x, int y) {
             break;
 
         case GLUT_KEY_LEFT:
-            rotateNAboutVACW(cam);
+            rotateCamLeft(cam);
             break;
         case GLUT_KEY_RIGHT:
-            rotateNAboutVCW(cam);
+            rotateCamRight(cam);
             break;
     }
     glutPostRedisplay();
@@ -166,54 +168,50 @@ void moveCamSpec(int key, int x, int y) {
     
 }
 
-void mouse_func(int button, int state, int x, int y) {
-    if(state == GLUT_DOWN) {
-        old_x = x;
-        old_y = y;
+void mouse_func( int x, int y) {
+    int diff_x = old_x - x;
+    int diff_y = old_y - y;
+    old_x = x;
+    old_y = y;
+    int i;
+    int quant_x = abs(diff_x/SENSIBILITY);
+    int quant_y = abs(diff_y/SENSIBILITY);
+
+    //printf("%d/n", button);
+    if(diff_x > 0) {
+        //ROT_DIR = RIGHT_DIR;
+        //for(i = 0; i < quant_x; i++) {
+            
+            //ROT_ANGLE += (ROT_DIR * RAD_TO_GRAD(CAM_ROT_SPEED));
+            rotateCamRight(cam);
+        //}
     }
-    else if(state == GLUT_UP) {
-        int diff_x = old_x - x;
-        int diff_y = old_y - y;
-        old_x = x;
-        old_y = y;
-        int i;
-        int quant_x = abs(diff_x/SENSIBILITY);
-        int quant_y = abs(diff_y/SENSIBILITY);
-
-
-
-        if(diff_x > 0) {
-            ROT_DIR = RIGHT_DIR;
-            for(i = 0; i < quant_x; i++) {
-                
-                //ROT_ANGLE += (ROT_DIR * RAD_TO_GRAD(CAM_ROT_SPEED));
-                rotateCamRight(cam);
-            }
-        }
-        if(diff_x < 0) {
-            ROT_DIR = LEFT_DIR;
-            for(i = 0; i < quant_x; i++) {
-                
-                //ROT_ANGLE += (ROT_DIR * RAD_TO_GRAD(CAM_ROT_SPEED));
-                rotateCamLeft(cam);
-            }
-        }
-
-        if(diff_y > 0) {
-            for(i = 0; i < quant_y; i++) {
-                rotateCamUp(cam);
-            }
-        }
-        if(diff_y < 0) {
-            for(i = 0; i < quant_y; i++) {
-                rotateCamDown(cam);
-            }
-        }
-        glutPostRedisplay();
+    if(diff_x < 0) {
+        //ROT_DIR = LEFT_DIR;
+        //for(i = 0; i < quant_x; i++) {
+            
+            //ROT_ANGLE += (ROT_DIR * RAD_TO_GRAD(CAM_ROT_SPEED));
+            rotateCamLeft(cam);
+        //}
     }
 
+    if(diff_y > 0) {
+        //for(i = 0; i < quant_y; i++) {
+            rotateCamUp(cam);
+        //}
+    }
+    if(diff_y < 0) {
+        //for(i = 0; i < quant_y; i++) {
+            rotateCamDown(cam);
+        //}
+    }
+    glutPostRedisplay();
 }
 
+void pass_mouse_func(int x, int y) {
+    old_x = x;
+    old_y = y;
+}
 void draw_axis(){
 	float width = 1.5f;
 	glLineWidth(width);
@@ -270,6 +268,27 @@ void draw_axis_ticks() {
     }
 }
 
+
+void draw_window() {
+    
+    //glTranslatef ( -46.5 , 41.2 , -75 ) ;
+    if(ROT_WINDOW) {
+        ROT_W_ANGLE += ROT_W_DIR;
+        
+        
+        if(ROT_W_ANGLE == 90 || ROT_W_ANGLE == 0) {
+            //para de girar a janela
+            ROT_WINDOW = 0;
+            ROT_W_DIR *= (-1);
+        }
+        glTranslatef ( -1.5, 1.5 , 0) ;
+        
+    }
+    glRotatef(ROT_W_ANGLE, 0, 1, 0);
+    
+    //glScalef(15.0,12.0,5.0);
+    draw_objects(3, 1, 1, 0);
+}
 void draw_cube() {
     glBegin(GL_QUADS);
         glColor3f (0.5 , 0.5 , 0.5 ) ;
@@ -368,16 +387,16 @@ void display() {
     
     glMatrixMode ( GL_MODELVIEW ) ;
     glLoadIdentity () ;
-    glRotatef ( ROT_ANGLE, 0.0f , 1.0f , 0.0f ) ;
 
     
-    D(glPushMatrix();
-    draw_axis();
-    glPopMatrix();
+    D(
+        glPushMatrix();
+        draw_axis();
+        glPopMatrix();
 
-    glPushMatrix();
-    draw_axis_ticks();
-    glPopMatrix();)
+        glPushMatrix();
+        draw_axis_ticks();
+        glPopMatrix();)
     //glPushMatrix();
     //draw_cube();
     //glPopMatrix();
@@ -390,7 +409,7 @@ void display() {
     
     
     //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
-    glTranslatef ( 0 , -10 , 0 ) ;
+    /*glTranslatef ( 0 , -10 , 0 ) ;
     draw_objects(0, 0.5, 0.5, 0.5);
     glPopMatrix();
 
@@ -401,12 +420,10 @@ void display() {
 
     glPushMatrix();
     draw_objects(2, 0, 1, 0);
-    glPopMatrix();
+    glPopMatrix();*/
 
     glPushMatrix();
-    glTranslatef ( -46.5 , 41.2 , -75 ) ;
-    glScalef(15.0,12.0,5.0);
-    draw_objects(3, 1, 1, 0);
+    draw_window();
     glPopMatrix();
 
     /*glPushMatrix();
@@ -447,6 +464,7 @@ void display() {
     
     glFlush();
     glutSwapBuffers () ;
+    glutPostRedisplay();
 }
 
 void load_obj_display(const char* path, int index) {
