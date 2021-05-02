@@ -7,11 +7,9 @@
 
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
-#define SENSIBILITY 100.0f
+
 #define MODEL_QUANT 10
 
-#define LEFT_DIR 1
-#define RIGHT_DIR -1
 #define PI 3.14
 #define RAD_TO_GRAD(c) c*180/PI
 
@@ -76,13 +74,6 @@ int main(int argc, char** argv) {
     glDepthRange(0.0f, 1.0f);
 
     cam = init_camera();
-
-    parede_altura = 3.0f ; // 3m
-    parede_espessura = 0.3f ; // 30 cm
-    parede_largura = 4.0f ; // 4m
-    parede_x = 0.0f ;
-    parede_y = 1.5f ; // metade da altura
-    parede_z = 1.0f ;
     /*
     * center representa o ponto que estamos olhando ,
     * nesse caso sera o centro da parede
@@ -136,7 +127,6 @@ void moveCam(unsigned char key, int x, int y) {
             break;      
         case '/':
             resetOrgDir(cam);
-            ROT_ANGLE = 0;
             break;  
         case 'g':
             ROT_WINDOW = 1;
@@ -174,36 +164,19 @@ void mouse_func( int x, int y) {
     old_x = x;
     old_y = y;
     int i;
-    int quant_x = abs(diff_x/SENSIBILITY);
-    int quant_y = abs(diff_y/SENSIBILITY);
 
-    //printf("%d/n", button);
     if(diff_x > 0) {
-        //ROT_DIR = RIGHT_DIR;
-        //for(i = 0; i < quant_x; i++) {
-            
-            //ROT_ANGLE += (ROT_DIR * RAD_TO_GRAD(CAM_ROT_SPEED));
-            rotateCamRight(cam);
-        //}
+        rotateCamRight(cam);
     }
     if(diff_x < 0) {
-        //ROT_DIR = LEFT_DIR;
-        //for(i = 0; i < quant_x; i++) {
-            
-            //ROT_ANGLE += (ROT_DIR * RAD_TO_GRAD(CAM_ROT_SPEED));
-            rotateCamLeft(cam);
-        //}
+        rotateCamLeft(cam);
     }
 
     if(diff_y > 0) {
-        //for(i = 0; i < quant_y; i++) {
-            rotateCamUp(cam);
-        //}
+        rotateCamUp(cam);
     }
     if(diff_y < 0) {
-        //for(i = 0; i < quant_y; i++) {
-            rotateCamDown(cam);
-        //}
+        rotateCamDown(cam);
     }
     glutPostRedisplay();
 }
