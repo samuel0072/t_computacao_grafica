@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #define CAM_MV_SPEED  1.0f//velocidade de movimento em unidades do mundo
-#define CAM_ROT_SPEED 0.0872665//angulo de rotação em radianos
+#define CAM_ROT_SPEED 0.0174533//angulo de rotação em radianos
 #define FOV 75.0f
 #define X 0
 #define Y 1
