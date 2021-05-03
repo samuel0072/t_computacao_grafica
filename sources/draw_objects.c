@@ -7,6 +7,7 @@
 int ROT_WINDOW = 0;//flag para girar a janela
 float ROT_W_ANGLE = 0;//angulo de rotação da janela em graus
 int ROT_W_DIR = 1;//Direção de rotação da janela:horário, antihorário
+int HEX_ANGLE = 0;
 
 void draw_axis(){
 	float width = 1.5f;
@@ -157,6 +158,22 @@ void draw_cube() {
     glEnd();
 }
 
+void draw_helix() {
+    //glScalef(5.0,5.0,5.0);
+    draw_objects(8, 0.8, 0.8, 0);
+    glTranslatef(0, 1.7, 0);
+    glScalef(0.75,0.75,0.75);
+    glRotatef(90, 1, 0, 0);
+
+    HEX_ANGLE += 1;
+    HEX_ANGLE %= 360;
+    glRotatef(HEX_ANGLE, 0, 1, 0);//Gira no Y pq  ventilador original ta no plano XZ e não no XY
+
+    draw_objects(7, 0.5, 0, 0);
+    
+    
+}
+
 void draw_objects(int index, float r, float g, float b) {
     if(0 <= index < MODEL_QUANT) {
         int i;
@@ -181,3 +198,5 @@ void draw_objects(int index, float r, float g, float b) {
         exit(1);
     }
 }
+
+

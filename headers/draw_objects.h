@@ -29,5 +29,7 @@ void draw_axis();
 /*Desenha um cubo*/
 void draw_cube();
 
+/*Desenha o ventilador girando*/
+void draw_helix();
 
 #endif
