@@ -28,7 +28,10 @@ float* cam_nv;
 void* cam = NULL;
 
 
+
+
 void display();
+
 
 int main(int argc, char** argv) {
     
@@ -53,11 +56,15 @@ int main(int argc, char** argv) {
     load_obj("./models/casa.obj");*/
     cam = (Camera*)init_camera();
     init_obj_vecs();
-    /*load_obj_display("./models/casa.obj", 0);
+    load_obj_display("./models/cadeira.obj", 0);
     load_obj_display("./models/cama.obj", 1);
-    load_obj_display("./models/caneca.obj", 2);*/
+    load_obj_display("./models/caneca.obj", 2);
     load_obj_display("./models/janela.obj", 3);
-    //load_obj_display("./models/mesa.obj", 4);
+    load_obj_display("./models/basquete.obj", 4);
+    load_obj_display("./models/estanteDeLivros.obj", 5);
+    load_obj_display("./models/sofa.obj", 6);
+    load_obj_display("./models/ventilador/helice.obj", 7);
+    load_obj_display("./models/ventilador/base_sem_helice3.obj", 8);
 
 
     glutDisplayFunc(display);
@@ -102,70 +109,53 @@ void display() {
         glPushMatrix();
         draw_axis_ticks();
         glPopMatrix();)
-    //glPushMatrix();
-    //draw_cube();
-    //glPopMatrix();
-    //glColor3f (0.5 , 0.5 , 0.5 ) ;
-    //glTranslatef ( 0 , 0 , 0 ) ;
 
+        //glTranslatef ( -10 , 0 , -10 ) ;
+        glPushMatrix();
+        draw_helix();
+        glPopMatrix();
 
-    glPushMatrix();
+        /*glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(0, 0.5, 0, 0);
+        glPopMatrix();
 
-    
-    
-    //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
-    /*glTranslatef ( 0 , -10 , 0 ) ;
-    draw_objects(0, 0.5, 0.5, 0.5);
-    glPopMatrix();
+        glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(1, 0.5, 0, 0);
+        glPopMatrix();
 
-    glPushMatrix();
-    glScalef(5.0,5.0,5.0);
-    draw_objects(1, 1, 0, 0);
-    glPopMatrix();
+        glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(2, 0.5, 0, 0);
+        glPopMatrix();
 
-    glPushMatrix();
-    draw_objects(2, 0, 1, 0);
-    glPopMatrix();*/
+        glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(3, 0.5, 0, 0);
+        glPopMatrix();
 
-    glPushMatrix();
-    draw_window();
-    glPopMatrix();
+        glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(4, 0.5, 0, 0);
+        glPopMatrix();
 
-    /*glPushMatrix();
-    //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
-    draw_objects(3, 0.5, 0.5, 0.5);
-    glPopMatrix();
+        glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(5, 0.5, 0, 0);
+        glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef ( 0 , 10 , 0 ) ;
-    //glRotatef ( 180 , 1.0f , 0.0f , 0.0f ) ;
-    draw_objects(4, 0.5, 0.5, 0.5);
-    glPopMatrix();*/
-
-    
-
-
-
-
-    /*glPushMatrix();
-    glLoadIdentity () ;
-    glTranslatef ( parede_x , parede_y , parede_z+10.0 ) ;
-    
-    glScalef ( parede_largura , parede_altura , parede_espessura );
-    glColor3f ( 1.0f , 0.0f , 0.0f ) ;
-    glutSolidCube (1 ) ;
-    glPopMatrix();
-
-    glPushMatrix();
-    glLoadIdentity () ;
-    glTranslatef ( parede_x , parede_y , parede_z ) ;
-    
-    glScalef ( parede_largura , parede_altura , parede_espessura );
-    glColor3f ( 1.0f , 1.0f , 0.0f ) ;
-    glutSolidCube (1 ) ;
-    glPopMatrix();*/
-
-    
+        glPushMatrix();
+        glTranslatef ( -10 , 0 , -10 ) ;
+        glScalef(5.0,5.0,5.0);
+        draw_objects(6, 0.5, 0, 0);
+        glPopMatrix();*/
     
     glFlush();
     glutSwapBuffers () ;
