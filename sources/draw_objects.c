@@ -1,5 +1,5 @@
 #include "../headers/draw_objects.h"
-#include "obj_import.h"
+#include "../headers/obj_import.h"
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <stdio.h>

@@ -7,8 +7,7 @@
 #define PI 3.14
 #define RAD_TO_GRAD(c) c*180/PI
 
-/*Inicializada no main.c, representa a camera*/
-extern Camera* cam;
+extern void* cam;
 
 /*Funções de callback da GLUT*/
 

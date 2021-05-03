@@ -25,7 +25,8 @@ float* cam_pos;
 float* cam_center;
 float* cam_nv;
 
-Camera* cam = NULL;
+void* cam = NULL;
+
 
 void display();
 
@@ -41,7 +42,7 @@ int main(int argc, char** argv) {
     glDepthFunc(GL_LEQUAL);
     glDepthRange(0.0f, 1.0f);
 
-    cam = init_camera();
+    
     /*
     * center representa o ponto que estamos olhando ,
     * nesse caso sera o centro da parede
@@ -50,7 +51,7 @@ int main(int argc, char** argv) {
     /*init_vecs();
 
     load_obj("./models/casa.obj");*/
-
+    cam = (Camera*)init_camera();
     init_obj_vecs();
     /*load_obj_display("./models/casa.obj", 0);
     load_obj_display("./models/cama.obj", 1);
@@ -67,7 +68,6 @@ int main(int argc, char** argv) {
     glutMainLoop();
     return 0;
 }
-
 
 void display() {
 

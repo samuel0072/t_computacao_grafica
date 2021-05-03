@@ -1,37 +1,40 @@
 #include "../headers/cam_movement.h"
 #include "../headers/draw_objects.h"
+#include "../headers/camera.h"
 #include <GL/gl.h>
 #include <GL/glut.h>
 
 int old_x = 0;
 int old_y = 0;
 
+
+
 void moveCam(unsigned char key, int x, int y) {
 
     switch(key) {
         case 'w':
-            moveCamFoward(cam);
+            moveCamFoward((Camera*)cam);
             break;
         case 's':
-            moveCamBackwards(cam);
+            moveCamBackwards((Camera*)cam);
             break;
         case 'a':
-            moveCamLeft(cam);
+            moveCamLeft((Camera*)cam);
             break;     
         case 'd':
-            moveCamRight(cam);
+            moveCamRight((Camera*)cam);
             break;
         case 'z':
-            turnCamBack(cam);
+            turnCamBack((Camera*)cam);
             break;
         case 'f':
-            moveCamDown(cam);
+            moveCamDown((Camera*)cam);
             break;
         case 'r':
-            moveCamUp(cam);
+            moveCamUp((Camera*)cam);
             break;      
         case '/':
-            resetOrgDir(cam);
+            resetOrgDir((Camera*)cam);
             break;  
         case 'g':
             ROT_WINDOW = 1;
@@ -45,17 +48,17 @@ void moveCam(unsigned char key, int x, int y) {
 void moveCamSpec(int key, int x, int y) {
     switch(key) {
         case GLUT_KEY_UP:
-           rotateCamUp(cam);
+           rotateCamUp((Camera*)cam);
            break;
         case GLUT_KEY_DOWN:
-            rotateCamDown(cam);
+            rotateCamDown((Camera*)cam);
             break;
 
         case GLUT_KEY_LEFT:
-            rotateCamLeft(cam);
+            rotateCamLeft((Camera*)cam);
             break;
         case GLUT_KEY_RIGHT:
-            rotateCamRight(cam);
+            rotateCamRight((Camera*)cam);
             break;
     }
     glutPostRedisplay();
@@ -71,17 +74,17 @@ void mouse_func( int x, int y) {
     int i;
 
     if(diff_x > 0) {
-        rotateCamRight(cam);
+        rotateCamRight((Camera*)cam);
     }
     if(diff_x < 0) {
-        rotateCamLeft(cam);
+        rotateCamLeft((Camera*)cam);
     }
 
     if(diff_y > 0) {
-        rotateCamUp(cam);
+        rotateCamUp((Camera*)cam);
     }
     if(diff_y < 0) {
-        rotateCamDown(cam);
+        rotateCamDown((Camera*)cam);
     }
     glutPostRedisplay();
 }
