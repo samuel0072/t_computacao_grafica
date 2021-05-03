@@ -1,7 +1,6 @@
 #include "../headers/camera.h"
 #include <stdlib.h>
 #include <math.h>
-#include <stdio.h>
 
 struct Camera {
     float p_x, p_y, p_z;//posicao da camera
@@ -191,7 +190,7 @@ void rotateCamUp(Camera* c) {
     float cos_nv = c->n_x*c->v_x+ c->n_y*c->v_y + c->n_z*c->v_z;
     float ang = acos(cos_nv);
     float norma = sqrt(c->v_x*c->v_x+ c->v_y*c->v_y + c->v_z*c->v_z);
-    printf("%.2f %.2f %.2f\n", cos_nv, ang, norma);
+    
 
     if(ang >= MAX_GRAD) {
         double cos_rot = cos(CAM_ROT_SPEED);
@@ -219,8 +218,7 @@ void rotateCamUp(Camera* c) {
 void rotateCamDown(Camera* c) {
     float cos_nv = c->n_x*c->v_x+ c->n_y*c->v_y + c->n_z*c->v_z;
     float ang = acos(cos_nv);
-    float norma = sqrt(c->v_x*c->v_x+ c->v_y*c->v_y + c->v_z*c->v_z);
-    printf("%.2f %.2f %.2f\n", cos_nv, ang, norma);  
+    
 
     if (ang <= MIN_GRAD)
     {

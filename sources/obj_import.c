@@ -5,7 +5,11 @@
 
 
 
-
+int VERTEX_COUNT = 0;
+Vec3 *VERTICES = NULL;
+Vec3 *NORMALS = NULL;
+Vec2 *TEX_COORDS = NULL;
+Vecs** vecs = NULL;
 
 int load_obj(const char* path) {
 
@@ -67,10 +71,37 @@ int load_obj(const char* path) {
 	return 1;
 }
 
-
-
 void init_vecs() {
 	VERTICES = (Vec3*) malloc(MAX_VERTICES*sizeof(Vec3));
 	NORMALS = (Vec3*) malloc(MAX_VERTICES*sizeof(Vec3));
 	TEX_COORDS = (Vec2*) malloc(MAX_VERTICES*sizeof(Vec2));
+}
+
+void load_obj_display(const char* path, int index) {
+    int i;
+
+    if(0 <= index < MODEL_QUANT) {
+        init_vecs();
+        load_obj(path);
+        vecs[index]->VERTICES = VERTICES;
+        vecs[index]->NORMALS = NORMALS;
+        vecs[index]->TEX_COORDS = TEX_COORDS;
+        vecs[index]->VERTEX_COUNT = VERTEX_COUNT;
+        
+    }
+    else {
+        printf("Indice fora do range permitido: (0, %d)", MODEL_QUANT);
+        exit(1);
+    }
+
+    
+    
+}
+
+void init_obj_vecs() {
+    int i;
+    vecs = (Vecs**)malloc(MODEL_QUANT*sizeof(Vecs*));
+    for(i = 0; i < MODEL_QUANT; i++) {
+        vecs[i] = (Vecs*)malloc(sizeof(Vecs));
+    }
 }
