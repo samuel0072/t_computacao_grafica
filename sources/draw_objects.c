@@ -4,10 +4,10 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
-int ROT_WINDOW = 0;//flag para girar a janela
-float ROT_W_ANGLE = 0;//angulo de rotação da janela em graus
-int ROT_W_DIR = 1;//Direção de rotação da janela:horário, antihorário
+int WINDOW_OPEN = 0;//flag para abrir a janela
 int HEX_ANGLE = 0;
+
+int DOOR_OPEN = 0;
 
 void draw_axis(){
 	float width = 1.5f;
@@ -67,24 +67,20 @@ void draw_axis_ticks() {
 
 
 void draw_window() {
+     if(WINDOW_OPEN) {
+         //janela aberta
+        glTranslatef ( 28 , 30 , 65 ) ;
+        glScalef(0.5, 0.7, 0.5);
+        draw_objects(10, 1, 0, 1);
+     }
+     else {
+         //janela fechada
+        glTranslatef ( 28 , 30 , 65 ) ;
+        glScalef(0.5, 0.7, 0.5);
+        draw_objects(14, 1, 0, 1);
+     }
     
-    //glTranslatef ( -46.5 , 41.2 , -75 ) ;
-    if(ROT_WINDOW) {
-        ROT_W_ANGLE += ROT_W_DIR;
-        
-        
-        if(ROT_W_ANGLE == 90 || ROT_W_ANGLE == 0) {
-            //para de girar a janela
-            ROT_WINDOW = 0;
-            ROT_W_DIR *= (-1);
-        }
-        glTranslatef ( -1.5, 1.5 , 0) ;
-        
-    }
-    glRotatef(ROT_W_ANGLE, 0, 1, 0);
     
-    //glScalef(15.0,12.0,5.0);
-    draw_objects(3, 1, 1, 0);
 }
 
 void draw_cube() {
@@ -165,13 +161,38 @@ void draw_helix() {
     glScalef(0.75,0.75,0.75);
     glRotatef(90, 1, 0, 0);
 
-    HEX_ANGLE += 1;
+    HEX_ANGLE -= 1;
     HEX_ANGLE %= 360;
     glRotatef(HEX_ANGLE, 0, 1, 0);//Gira no Y pq  ventilador original ta no plano XZ e não no XY
 
     draw_objects(7, 0.5, 0, 0);
     
     
+}
+
+void draw_door() {
+    if(DOOR_OPEN) {
+        //aberta
+        glTranslatef ( -43 , 0.6 , -59.4 ) ;
+        glScalef(1, 0.8, 0.75);
+        draw_objects(12, 1, 0, 1);
+    }
+    else {
+        //porta fechada
+        glTranslatef ( -43 , 0.6 , -70.4 ) ;
+        glScalef(0.75, 0.8, 1);
+        draw_objects(13, 1, 0, 1);
+
+    }
+    
+}
+
+void change_door_state() {
+    DOOR_OPEN = !DOOR_OPEN;
+}
+
+void change_window_state() {
+    WINDOW_OPEN = !WINDOW_OPEN;
 }
 
 void draw_objects(int index, float r, float g, float b) {

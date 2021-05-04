@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#define CAM_MV_SPEED  1.0f//velocidade de movimento em unidades do mundo
+#define CAM_MV_SPEED  2.0f//velocidade de movimento em unidades do mundo
 #define CAM_ROT_SPEED 0.0174533//angulo de rotação em radianos
 #define MAX_GRAD 0.0872665 //Angulo máximo que a camera pode girar para cima/baixo em radianos(85°)
 #define MIN_GRAD 2.79253

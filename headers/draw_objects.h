@@ -4,13 +4,6 @@
 #ifndef DRAW_OBJECT_H
 #define DRAW_OBJECT_H
 
-
-
-/*Variáveis inicializadas no draw_objects.c*/
-extern int ROT_WINDOW;
-extern float ROT_W_ANGLE;//angulo de rotação da janela em graus
-extern int ROT_W_DIR;//Direção de rotação da janela:horário, antihorário
-
 /*Desenha marcações nos eixos*/
 void draw_axis_ticks();
 
@@ -32,4 +25,9 @@ void draw_cube();
 /*Desenha o ventilador girando*/
 void draw_helix();
 
+void draw_door();
+
+void change_door_state();
+
+void change_window_state();
 #endif
