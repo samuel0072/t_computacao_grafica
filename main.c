@@ -12,7 +12,7 @@
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
 
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #define D(x) x
 #else
@@ -71,6 +71,8 @@ int main(int argc, char** argv) {
     load_obj_display("./models/portaFechada.obj", 13);
     load_obj_display("./models/janelaFechada.obj", 14);
     load_obj_display("./models/mesa.obj", 15);
+    load_obj_display("./models/quadroFaceTriangular.obj", 3);
+
     
 
 
@@ -122,13 +124,14 @@ void display() {
     glPushMatrix();
     glTranslatef ( 70 ,48.5 , -30 ) ;
     glScalef(4.0, 4.0, 4.0);
-    glRotatef(90, 0, 1, 0);
+    glRotatef(90, 0, 0.9, 0);
     draw_helix();
     glPopMatrix();
 
     //casa
     glPushMatrix();
-    draw_objects(9, 1, 0, 0);
+    glRotatef(180, 0, 1, 0);
+    draw_objects(9, 0.9, 0, 0);
     glPopMatrix();
 
     //cadeira
@@ -136,14 +139,14 @@ void display() {
     glTranslatef ( -10 , 0.7 , -50 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(0, 1, 1, 0);
+    draw_objects(0, 0.9, 0.9, 0);
     glPopMatrix();
 
     //cama
     glPushMatrix();
     glTranslatef ( -80 ,4, 64 ) ;
     glScalef(7.0, 7.0, 7.0);
-    draw_objects(1, 1, 1, 0);
+    draw_objects(1, 0.9, 0.9, 0);
     glPopMatrix();
 
     //copo
@@ -151,7 +154,7 @@ void display() {
     glTranslatef ( -13 , 15.8 , -70 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(2, 1, 1, 0);
+    draw_objects(2, 0.9, 0.9, 0);
     glPopMatrix();
 
     //basquete
@@ -159,7 +162,7 @@ void display() {
     glTranslatef ( -78.2 ,30 , 1 ) ;
     glScalef(7.0,7.0, 7.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(4, 1, 1, 0);
+    draw_objects(4, 0.9, 0.9, 0);
     glPopMatrix();
 
     //estante
@@ -168,7 +171,7 @@ void display() {
     glTranslatef ( 90 ,30 , -60 ) ;
     glRotatef(180, 0, 1, 0);
     glScalef(3.0, 3.0, 3.0);
-    draw_objects(5, 1, 1, 0);
+    draw_objects(5, 0.9, 0.9, 0);
     glPopMatrix();
 
     //sofa
@@ -176,7 +179,7 @@ void display() {
     glTranslatef ( 15 , 0.7 , 70 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(180, 0, 1, 0);
-    draw_objects(6, 1, 0, 1);
+    draw_objects(6, 0.9, 0, 0.9);
     glPopMatrix();
 
     //janela
@@ -188,7 +191,7 @@ void display() {
     glPushMatrix();
     glTranslatef ( 21 , 0 , -66 ) ;
     glScalef(2.0, 2.0, 2.0);
-    draw_objects(11, 1, 0, 1);
+    draw_objects(11, 0.9, 0, 0.9);
     glPopMatrix();
 
     //porta 
@@ -201,7 +204,15 @@ void display() {
     glTranslatef ( 15 , 0 , -58.5 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(270, 0, 1, 0);
-    draw_objects(15, 1, 0, 1);
+    draw_objects(15, 0.9, 0, 0.9);
+    glPopMatrix();
+
+    //quadro
+    glPushMatrix();
+    glTranslatef ( 0 ,30 , -74.5 ) ;
+    glScalef(1.5, 1.5, 1.5);
+    //glRotatef(270, 0, 1, 0);
+    draw_objects(3, 0.1, 0.5, 0.8);
     glPopMatrix();
 
         

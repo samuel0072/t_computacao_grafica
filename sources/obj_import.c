@@ -11,6 +11,8 @@ Vec3 *NORMALS = NULL;
 Vec2 *TEX_COORDS = NULL;
 Vecs** vecs = NULL;
 
+
+
 int load_obj(const char* path) {
 
 	FILE* fp = fopen(path, "r");

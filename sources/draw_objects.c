@@ -9,6 +9,8 @@ int HEX_ANGLE = 0;
 
 int DOOR_OPEN = 0;
 
+float OFF_SET_COL = 0.1;
+
 void draw_axis(){
 	float width = 1.5f;
 	glLineWidth(width);
@@ -71,13 +73,13 @@ void draw_window() {
          //janela aberta
         glTranslatef ( 28 , 30 , 65 ) ;
         glScalef(0.5, 0.7, 0.5);
-        draw_objects(10, 1, 0, 1);
+        draw_objects(10, 0.8, 0.2, 0.2);
      }
      else {
          //janela fechada
         glTranslatef ( 28 , 30 , 65 ) ;
         glScalef(0.5, 0.7, 0.5);
-        draw_objects(14, 1, 0, 1);
+        draw_objects(14, 0.8, 0.2, 0.2);
      }
     
     
@@ -165,7 +167,7 @@ void draw_helix() {
     HEX_ANGLE %= 360;
     glRotatef(HEX_ANGLE, 0, 1, 0);//Gira no Y pq  ventilador original ta no plano XZ e não no XY
 
-    draw_objects(7, 0.5, 0, 0);
+    draw_objects(7, 0.5, 0.2, 0.2);
     
     
 }
@@ -175,13 +177,13 @@ void draw_door() {
         //aberta
         glTranslatef ( -43 , 0.6 , -59.4 ) ;
         glScalef(1, 0.8, 0.75);
-        draw_objects(12, 1, 0, 1);
+        draw_objects(12, 0.9, 0, 0.9);
     }
     else {
         //porta fechada
         glTranslatef ( -43 , 0.6 , -70.4 ) ;
         glScalef(0.75, 0.8, 1);
-        draw_objects(13, 1, 0, 1);
+        draw_objects(13, 0.7, 0.1, 0.9);
 
     }
     
@@ -206,10 +208,11 @@ void draw_objects(int index, float r, float g, float b) {
 
         glBegin(GL_TRIANGLES);
 	    for(i = 0;i < VERTEX_COUNT;i++){
-            glColor3f (r , g , b ) ;
+            glColor3f (r + OFF_SET_COL , g + OFF_SET_COL , b + OFF_SET_COL) ;
             glNormal3f(NORMALS[i].x, NORMALS[i].y, NORMALS[i].z);
             glTexCoord2f(TEX_COORDS[i].x, TEX_COORDS[i].y);
             glVertex3f(VERTICES[i].x, VERTICES[i].y, VERTICES[i].z);
+            OFF_SET_COL = - OFF_SET_COL;
 	    }
 	    glEnd();
         
