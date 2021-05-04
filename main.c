@@ -151,7 +151,7 @@ void display() {
 
     //copo
     glPushMatrix();
-    glTranslatef ( -13 , 15.8 , -70 ) ;
+    glTranslatef ( -13 , 15.8 , -65 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
     draw_objects(2, 0.9, 0.9, 0);
@@ -201,9 +201,9 @@ void display() {
 
     //mesa
     glPushMatrix();
-    glTranslatef ( 15 , 0 , -58.5 ) ;
+    glTranslatef ( -15 , 0 , -73.5 ) ;
     glScalef(2.0, 2.0, 2.0);
-    glRotatef(270, 0, 1, 0);
+    glRotatef(90, 0, 1, 0);
     draw_objects(15, 0.9, 0, 0.9);
     glPopMatrix();
 
