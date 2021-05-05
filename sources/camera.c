@@ -4,7 +4,7 @@
 
 struct Camera {
     float p_x, p_y, p_z;//posicao da camera
-    float n_x, n_y, n_z;//Normal ao vetor de view da camera, vetor v
+    float n_x, n_y, n_z;//vetor fixo na direção do eixo Y
     float v_x, v_y, v_z;//Vetor que define a direção e sentido de visualização, vetor n
     float s_x, s_y, s_z;//vetor resultado do produto vetorial entre o normal e o view, vetor s
 };
@@ -243,29 +243,6 @@ void rotateCamDown(Camera* c) {
     
    
 
-}
-
-
-void rotateNAboutVCW(Camera* c ) {
-    //Rotaciona o vetor n ao redor do vetor v no sentido horário
-    double cos_rot = cos(CAM_ROT_SPEED);
-    double sin_rot = sin(CAM_ROT_SPEED);
-    c->n_x = c->n_x*cos_rot + c->s_x*sin_rot;
-    c->n_y = c->n_y*cos_rot + c->s_y*sin_rot;
-    c->n_z = c->n_z*cos_rot + c->s_z*sin_rot;
-
-    updateSvec(c);
-}
-
-void rotateNAboutVACW(Camera* c ) {
-    //Rotaciona o vetor n ao redor do vetor v no sentido antihorário
-    double cos_rot = cos(-CAM_ROT_SPEED);
-    double sin_rot = sin(-CAM_ROT_SPEED);
-    c->n_x = c->n_x*cos_rot + c->s_x*sin_rot;
-    c->n_y = c->n_y*cos_rot + c->s_y*sin_rot;
-    c->n_z = c->n_z*cos_rot + c->s_z*sin_rot;
-
-    updateSvec(c);
 }
 
 void updateSvec(Camera* c) {

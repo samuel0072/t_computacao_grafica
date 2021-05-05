@@ -13,7 +13,7 @@
 
 /*A struct camera é composta de 4 vetores: v, n, s e p
 o vetor v indica a direção e o sentido que a camera olha
-o vetor n é perpendicular ao vetor v e indica a direção do topo da camera
+o vetor n é fixo na mesma direção do eixo y
 o vetor s é o produto vetorial entre o vetor v e n: vXn
 o vetor p indica a posição da camera 
 */
@@ -81,11 +81,6 @@ void rotateCamUp(Camera* c);
 //Rotaciona o vetor v ao redor do vetor s no sentido antihorário
 void rotateCamDown(Camera* c);
 
-//Rotaciona o vetor n ao redor do vetor v no sentido horário
-void rotateNAboutVCW(Camera* c);
-
-//Rotaciona o vetor n ao redor do vetor v no sentido horário
-void rotateNAboutVACW(Camera* c );
 
 void resetOrgDir(Camera* c);
 #endif
