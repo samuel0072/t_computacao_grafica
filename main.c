@@ -46,14 +46,7 @@ int main(int argc, char** argv) {
     glDepthRange(0.0f, 1.0f);
 
     
-    /*
-    * center representa o ponto que estamos olhando ,
-    * nesse caso sera o centro da parede
-    */
-
-    /*init_vecs();
-
-    load_obj("./models/casa.obj");*/
+   
     cam = (Camera*)init_camera();
     init_obj_vecs();
     load_obj_display("./models/cadeira.obj", 0);
@@ -103,8 +96,8 @@ void display() {
     cam_center = getCamCenter(cam);
     cam_nv = getCamNV(cam);
 
-    gluLookAt( cam_pos[X] , cam_pos[Y] , cam_pos[Z] , cam_center[X] , cam_center[Y] ,
-    cam_center[Z] , cam_nv[X] , cam_nv[Y] , cam_nv[Z] ) ;
+    gluLookAt( cam_pos[IX] , cam_pos[IY] , cam_pos[IZ] , cam_center[IX] , cam_center[IY] ,
+    cam_center[IZ] , cam_nv[IX] , cam_nv[IY] , cam_nv[IZ] ) ;
     
     glMatrixMode ( GL_MODELVIEW ) ;
     glLoadIdentity () ;

@@ -133,13 +133,13 @@ void rotateCamRight(Camera* c) {
     float v[] = {c->v_x, c->v_y, c->v_z};
 
     cross_v_u(y, v, yxv);
-    yxv[X] *= sin_rot;
-    yxv[Y] *= sin_rot;
-    yxv[Z] *= sin_rot;
+    yxv[IX] *= sin_rot;
+    yxv[IY] *= sin_rot;
+    yxv[IZ] *= sin_rot;
 
-    c->v_x = v_scaled[X] + yxv[X] + 0*const3;//o vetor Y é 0 na cord x
-    c->v_y = v_scaled[Y] + yxv[Y] + 1*const3;//o vetor Y é 1 na cord y
-    c->v_z = v_scaled[Z] + yxv[Z] + 0*const3;//o vetor Y é 0 na cord z
+    c->v_x = v_scaled[IX] + yxv[IX] + 0*const3;//o vetor Y é 0 na cord x
+    c->v_y = v_scaled[IY] + yxv[IY] + 1*const3;//o vetor Y é 1 na cord y
+    c->v_z = v_scaled[IZ] + yxv[IZ] + 0*const3;//o vetor Y é 0 na cord z
 
     /*
     c->v_x = cos_rot * c->v_x + sin_rot * c->s_x;
@@ -167,13 +167,13 @@ void rotateCamLeft(Camera* c) {
     float v[] = {c->v_x, c->v_y, c->v_z};
 
     cross_v_u(y, v, yxv);
-    yxv[X] *= sin_rot;
-    yxv[Y] *= sin_rot;
-    yxv[Z] *= sin_rot;
+    yxv[IX] *= sin_rot;
+    yxv[IY] *= sin_rot;
+    yxv[IZ] *= sin_rot;
 
-    c->v_x = v_scaled[X] + yxv[X] + 0*const3;//o vetor Y é 0 na cord x
-    c->v_y = v_scaled[Y] + yxv[Y] + 1*const3;//o vetor Y é 1 na cord y
-    c->v_z = v_scaled[Z] + yxv[Z] + 0*const3;//o vetor Y é 0 na cord z
+    c->v_x = v_scaled[IX] + yxv[IX] + 0*const3;//o vetor Y é 0 na cord x
+    c->v_y = v_scaled[IY] + yxv[IY] + 1*const3;//o vetor Y é 1 na cord y
+    c->v_z = v_scaled[IZ] + yxv[IZ] + 0*const3;//o vetor Y é 0 na cord z
 
     /*
     c->v_x = cos_rot*c->v_x + sin_rot* c->s_x;
@@ -202,13 +202,13 @@ void rotateCamUp(Camera* c) {
         float s[] = {c->s_x, c->s_y, c->s_z};
         float v[] = {c->v_x, c->v_y, c->v_z};
         cross_v_u(s, v, sxv);
-        sxv[X] *= sin_rot; 
-        sxv[Y] *= sin_rot; 
-        sxv[Z] *= sin_rot; 
+        sxv[IX] *= sin_rot; 
+        sxv[IY] *= sin_rot; 
+        sxv[IZ] *= sin_rot; 
 
-        c->v_x = v_scaled[X] + sxv[X] + cons*c->s_x;
-        c->v_y = v_scaled[Y] + sxv[Y] + cons*c->s_y;
-        c->v_z = v_scaled[Z] + sxv[Z] + cons*c->s_z;
+        c->v_x = v_scaled[IX] + sxv[IX] + cons*c->s_x;
+        c->v_y = v_scaled[IY] + sxv[IY] + cons*c->s_y;
+        c->v_z = v_scaled[IZ] + sxv[IZ] + cons*c->s_z;
     }
 
     
@@ -232,13 +232,13 @@ void rotateCamDown(Camera* c) {
         float s[] = {c->s_x, c->s_y, c->s_z};
         float v[] = {c->v_x, c->v_y, c->v_z};
         cross_v_u(s, v, sxv);
-        sxv[X] *= sin_rot; 
-        sxv[Y] *= sin_rot; 
-        sxv[Z] *= sin_rot; 
+        sxv[IX] *= sin_rot; 
+        sxv[IY] *= sin_rot; 
+        sxv[IZ] *= sin_rot; 
 
-        c->v_x = v_scaled[X] + sxv[X] + cons*c->s_x;
-        c->v_y = v_scaled[Y] + sxv[Y] + cons*c->s_y;
-        c->v_z = v_scaled[Z] + sxv[Z] + cons*c->s_z;
+        c->v_x = v_scaled[IX] + sxv[IX] + cons*c->s_x;
+        c->v_y = v_scaled[IY] + sxv[IY] + cons*c->s_y;
+        c->v_z = v_scaled[IZ] + sxv[IZ] + cons*c->s_z;
     }
     
    
@@ -258,9 +258,9 @@ void updateSvec(Camera* c) {
 
 void cross_v_u(float v[], float u[], float output[]) {
     //Faz o produto vetorial VxU e escreve o resultado no vetor output
-    output[X] = (v[Y]*u[Z]) - (u[Y]*v[Z]);
-    output[Y] = (u[X]*v[Z]) - (v[X]*u[Z]);
-    output[Z] = (v[X]*u[Y]) - (u[X]*v[Y]);
+    output[IX] = (v[IY]*u[IZ]) - (u[IY]*v[IZ]);
+    output[IY] = (u[IX]*v[IZ]) - (v[IX]*u[IZ]);
+    output[IZ] = (v[IX]*u[IY]) - (u[IX]*v[IY]);
 
 }
 

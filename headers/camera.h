@@ -6,9 +6,9 @@
 #define MAX_GRAD 0.0872665 //Angulo máximo que a camera pode girar para cima/baixo em radianos(85°)
 #define MIN_GRAD 2.79253
 #define FOV 75.0f
-#define X 0
-#define Y 1
-#define Z 2
+#define IX 0
+#define IY 1
+#define IZ 2
 
 
 /*A struct camera é composta de 4 vetores: v, n, s e p

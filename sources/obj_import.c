@@ -24,9 +24,9 @@ int load_obj(const char* path) {
 	int vertex_count = 0;
 	int normal_count = 0;
 	int tex_coord_count = 0;
-	Vec3 vertices[MAX_VERTICES];
-	Vec3 normals[MAX_VERTICES];
-	Vec2 tex_coords[MAX_VERTICES];
+	Vec3* vertices = (Vec3*) malloc(MAX_VERTICES*sizeof(Vec3));
+	Vec3* normals = (Vec3*) malloc(MAX_VERTICES*sizeof(Vec3));
+	Vec2* tex_coords = (Vec2*) malloc(MAX_VERTICES*sizeof(Vec2));
 
 	VERTEX_COUNT = 0;
 
@@ -67,6 +67,9 @@ int load_obj(const char* path) {
 			}
 		}
 	}
+	free(vertices);
+	free(tex_coords);
+	free(normals);
 
 	fclose(fp);
 
