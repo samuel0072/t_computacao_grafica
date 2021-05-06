@@ -4,6 +4,8 @@
 #ifndef DRAW_OBJECT_H
 #define DRAW_OBJECT_H
 
+typedef struct TextureInfo TextureInfo;
+
 /*Desenha marcações nos eixos*/
 void draw_axis_ticks();
 

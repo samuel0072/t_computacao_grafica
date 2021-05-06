@@ -39,12 +39,15 @@ int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    glutCreateWindow("Open GL");
+    glutCreateWindow("CG - ROOM");
 
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glDepthFunc(GL_LEQUAL);
     glDepthRange(0.0f, 1.0f);
+
+    
+	glEnable( GL_TEXTURE_2D ); 
 
     
    
@@ -113,6 +116,7 @@ void display() {
         draw_axis_ticks();
         glPopMatrix();)
 
+    
     //glTranslatef ( -10 , 0 , -10 ) ;
     //ventilador
     glPushMatrix();
@@ -209,6 +213,12 @@ void display() {
     draw_objects(3, 0.1, 0.5, 0.8);
     glPopMatrix();
 
+    glPushMatrix();
+    //glTranslatef(2, 3, 2);
+    glScalef(5.0, 5.0, 5.0);
+    //glRotatef(90, 1, 0, 0);
+    draw_cube();
+    glPopMatrix();
         
 
       
