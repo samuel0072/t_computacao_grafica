@@ -177,7 +177,7 @@ void draw_door() {
         //aberta
         glTranslatef ( -43 , 0.6 , -59.4 ) ;
         glScalef(1, 0.8, 0.75);
-        draw_objects(12, 0.9, 0, 0.9);
+        draw_objects(12, 0.7, 0.1, 0.9);
     }
     else {
         //porta fechada
