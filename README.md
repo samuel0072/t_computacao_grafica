@@ -13,3 +13,13 @@ Referências:
 
 ## Resultado AB1:
 
+- Link pro vídeo: [Projeto CG AB1](https://www.youtube.com/watch?v=tUBvlIbN5RY)
+
+### Imagens
+<img src="results/ab1_result1.png" width="400" height="300">
+<img src="results/ab1_result2.png" width="400" height="300">
+<img src="results/ab1_result3.png" width="400" height="300">
+<img src="results/ab1_result4.png" width="400" height="300">
+<img src="results/ab1_result5.png" width="400" height="300">
+<img src="results/ab1_result6.png" width="400" height="300">
+
