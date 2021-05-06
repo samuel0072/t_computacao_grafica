@@ -8,6 +8,7 @@
 #include "headers/obj_import.h"
 #include "headers/cam_movement.h"
 #include "headers/draw_objects.h"
+#include "headers/stb_image.h"
 
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
