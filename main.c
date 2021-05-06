@@ -53,6 +53,8 @@ int main(int argc, char** argv) {
    
     cam = (Camera*)init_camera();
     init_obj_vecs();
+    init_textures_vec();
+
     load_obj_display("./models/cadeira.obj", 0);
     load_obj_display("./models/cama.obj", 1);
     load_obj_display("./models/caneca.obj", 2);
@@ -70,6 +72,7 @@ int main(int argc, char** argv) {
     load_obj_display("./models/mesa.obj", 15);
     load_obj_display("./models/quadroFaceTriangular.obj", 3);
 
+    load_texture("textures/quadro-vangogh.jpg", 0);
     
 
 
@@ -217,6 +220,7 @@ void display() {
     //glTranslatef(2, 3, 2);
     glScalef(5.0, 5.0, 5.0);
     //glRotatef(90, 1, 0, 0);
+    aply_texture(0);
     draw_cube();
     glPopMatrix();
         

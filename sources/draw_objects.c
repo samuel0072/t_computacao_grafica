@@ -5,6 +5,12 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
+struct TextureInfo {
+    int width, height, nrChannels;
+    unsigned char* data;
+};
+
+
 int WINDOW_OPEN = 0;//flag para abrir a janela
 int HEX_ANGLE = 0;
 
@@ -12,12 +18,7 @@ int DOOR_OPEN = 0;
 
 float OFF_SET_COL = 0.1;
 
-
-struct TextureInfo {
-    unsigned int textureID;
-    int width, height, nrChannels;
-    unsigned char* data;
-};
+TextureInfo** textures = NULL;
 
 void draw_axis(){
 	float width = 1.5f;
@@ -94,54 +95,27 @@ void draw_window() {
 }
 
 void draw_cube() {
-    
-
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("textures/container.jpg", &width, &height, &nrChannels, 0);
-
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
-
-    if (data)
-    {
-        GLenum format;
-        if (nrChannels == 1)
-            format = GL_RED;
-        else if (nrChannels == 3)
-            format = GL_RGB;
-        else if (nrChannels == 4)
-            format = GL_RGBA;
-
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        // glGenerateMipmap(GL_TEXTURE_2D);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        stbi_image_free(data);
-    }
-    else
-    {
-        perror("Texture failed to load");
-        stbi_image_free(data);
-    }
-    
     glBegin(GL_QUADS);
-        glColor3f (0.5 , 0.5 , 0.5 ) ;
+        //glColor3f (0.5 , 0.5 , 0.5 ) ;
+
+        
         glTexCoord2f(0, 0);
 		glVertex3f(0, 0, 0);
+        
+
+        glTexCoord2f(1, 0);
+		glVertex3f(1.5, 0, 0);
+        
+
+        
+        glTexCoord2f(1, 1);
+        glVertex3f(1.5, 1, 0);
+        
 
         glTexCoord2f(0, 1);
         glVertex3f(0, 1, 0);
+        
 
-        glTexCoord2f(1, 1);
-        glVertex3f(1, 1, 0);
-
-        glTexCoord2f(1, 0);
-		glVertex3f(1, 0, 0);
     glEnd();
     
 }
@@ -213,6 +187,69 @@ void draw_objects(int index, float r, float g, float b) {
     }
 }
 
-void load_texture(int index) {
+void load_texture(const char* path, int index) {
 
+    if(0 <= index <= MODEL_QUANT) {
+        int width, height, nrChannels;
+        unsigned char *data = stbi_load(path, &width, &height, &nrChannels, 0);
+        textures[index] = (TextureInfo*)malloc(sizeof(TextureInfo));
+        textures[index]->data = data;
+        textures[index]->height = height;
+        textures[index]->width = width;
+        textures[index]->nrChannels = nrChannels;
+    }
+    else {
+        printf("Indice de textura inválido.");
+        exit(1);
+    }
+    
+}
+
+void init_textures_vec() {
+    textures = (TextureInfo**)malloc(MODEL_QUANT*sizeof(TextureInfo*));
+}
+
+void aply_texture(int index) {
+    if(0 <= index <= MODEL_QUANT) {
+        unsigned int textureID;
+        glGenTextures(1, &textureID);
+
+        unsigned char* data = textures[index]->data;
+
+        int width = textures[index]->width,
+            height= textures[index]->height,
+            nrChannels = textures[index]->nrChannels;
+
+        if (data)
+        {
+            GLenum format;
+            if (nrChannels == 1)
+                format = GL_RED;
+            else if (nrChannels == 3)
+                format = GL_RGB;
+            else if (nrChannels == 4)
+                format = GL_RGBA;
+
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            // glGenerateMipmap(GL_TEXTURE_2D);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            //stbi_image_free(data);
+            //não to liberando pq o código só carrega os arquivo de textura uma única vez
+        }
+        else
+        {
+            perror("Texture failed to load");
+            //stbi_image_free(data);
+        }
+    }
+    else {
+         printf("Indice de textura inválido.");
+        exit(1);
+    }
 }

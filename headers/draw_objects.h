@@ -6,6 +6,8 @@
 
 typedef struct TextureInfo TextureInfo;
 
+extern TextureInfo** textures;
+
 /*Desenha marcações nos eixos*/
 void draw_axis_ticks();
 
@@ -32,4 +34,10 @@ void draw_door();
 void change_door_state();
 
 void change_window_state();
+
+void load_texture(const char* path, int index);
+
+void init_textures_vec();
+
+void aply_texture(int index);
 #endif
