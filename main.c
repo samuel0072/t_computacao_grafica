@@ -12,7 +12,7 @@
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
 
-//#define DEBUG
+#define DEBUG
 #ifdef DEBUG
 #define D(x) x
 #else
