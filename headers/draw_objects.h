@@ -6,12 +6,13 @@
 
 typedef struct TextureInfo TextureInfo;
 
+/* Guarda todos os ids das texturas carregadas*/
 extern TextureInfo** textures;
 
 /*Desenha marcações nos eixos*/
 void draw_axis_ticks();
 
-/*Desenha uma janela*/
+/*Desenha a janela dependendo do estado dela*/
 void draw_window();
 
 /*Desenha um objeto qualquer*/
@@ -29,15 +30,28 @@ void draw_cube();
 /*Desenha o ventilador girando*/
 void draw_helix();
 
+/*Desenha a porta dependendo do estado dela*/
 void draw_door();
 
+/*Muda o estado da porta entre aberta/fechada*/
 void change_door_state();
 
+/*Muda o estado da janela entre aberta/fechada*/
 void change_window_state();
 
+/*
+Carrega uma imagem localizada em path para uma textura e associa seu id na posição index
+Se o arquivo não puder ser carregado o programa é encerrado
+*/
 void load_texture(const char* path, int index);
 
+/*
+Inicializa o vetor de ID's de texturas
+*/
 void init_textures_vec();
 
+/*
+Aplica uma textura com seu id na posição index do vetor textures
+*/
 void aply_texture(int index);
 #endif

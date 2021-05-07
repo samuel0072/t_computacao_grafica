@@ -73,6 +73,7 @@ int main(int argc, char** argv) {
     load_obj_display("./models/quadroFaceTriangular.obj", 3);
 
     load_texture("textures/quadro-vangogh.jpg", 0);
+    load_texture("textures/container.jpg", 1);
     
 
 
@@ -119,7 +120,7 @@ void display() {
         draw_axis_ticks();
         glPopMatrix();)
 
-    
+    aply_texture(1);
     //glTranslatef ( -10 , 0 , -10 ) ;
     //ventilador
     glPushMatrix();

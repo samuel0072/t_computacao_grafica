@@ -6,8 +6,7 @@
 #include <stdio.h>
 
 struct TextureInfo {
-    int width, height, nrChannels;
-    unsigned char* data;
+    unsigned int textureID;
 };
 
 
@@ -192,11 +191,31 @@ void load_texture(const char* path, int index) {
     if(0 <= index <= MODEL_QUANT) {
         int width, height, nrChannels;
         unsigned char *data = stbi_load(path, &width, &height, &nrChannels, 0);
-        textures[index] = (TextureInfo*)malloc(sizeof(TextureInfo));
-        textures[index]->data = data;
-        textures[index]->height = height;
-        textures[index]->width = width;
-        textures[index]->nrChannels = nrChannels;
+        if(data) {
+            textures[index] = (TextureInfo*)malloc(sizeof(TextureInfo));
+
+            unsigned int textureID;
+            glGenTextures(1, &textureID);
+
+            textures[index]->textureID = textureID;
+
+            glBindTexture(GL_TEXTURE_2D, textureID);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            
+        }
+        else {
+            printf("Falha ao carregar a textura.");
+            stbi_image_free(data);
+            exit(1);
+        }
+        stbi_image_free(data);
+        
     }
     else {
         printf("Indice de textura inválido.");
@@ -207,49 +226,22 @@ void load_texture(const char* path, int index) {
 
 void init_textures_vec() {
     textures = (TextureInfo**)malloc(MODEL_QUANT*sizeof(TextureInfo*));
+
+    int i;
+    for(i = 0; i < MODEL_QUANT; i++) {
+        textures[i] = NULL;
+    }
 }
 
 void aply_texture(int index) {
     if(0 <= index <= MODEL_QUANT) {
-        unsigned int textureID;
-        glGenTextures(1, &textureID);
-
-        unsigned char* data = textures[index]->data;
-
-        int width = textures[index]->width,
-            height= textures[index]->height,
-            nrChannels = textures[index]->nrChannels;
-
-        if (data)
-        {
-            GLenum format;
-            if (nrChannels == 1)
-                format = GL_RED;
-            else if (nrChannels == 3)
-                format = GL_RGB;
-            else if (nrChannels == 4)
-                format = GL_RGBA;
-
+        if(textures[index]) {
+            unsigned int textureID = textures[index]->textureID;
             glBindTexture(GL_TEXTURE_2D, textureID);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            // glGenerateMipmap(GL_TEXTURE_2D);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,  GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            //stbi_image_free(data);
-            //não to liberando pq o código só carrega os arquivo de textura uma única vez
-        }
-        else
-        {
-            perror("Texture failed to load");
-            //stbi_image_free(data);
         }
     }
     else {
-         printf("Indice de textura inválido.");
+        printf("Indice de textura inválido.");
         exit(1);
     }
 }
