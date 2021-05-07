@@ -213,15 +213,15 @@ void display() {
     glPushMatrix();
     glTranslatef ( 0 ,30 , -74.5 ) ;
     glScalef(1.5, 1.5, 1.5);
-    //glRotatef(270, 0, 1, 0);
     draw_objects(3, 0.1, 0.5, 0.8);
     glPopMatrix();
 
     glPushMatrix();
-    //glTranslatef(2, 3, 2);
-    glScalef(5.0, 5.0, 5.0);
-    //glRotatef(90, 1, 0, 0);
+    glTranslatef ( 1.75 ,30.5 , -71 ) ;
+    
+    //Desenha a imagem que vai no quadro
     aply_texture(0);
+    glScalef(10.0, 9.0, 1.0);
     draw_cube();
     glPopMatrix();
         

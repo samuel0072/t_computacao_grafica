@@ -94,6 +94,7 @@ void draw_window() {
 }
 
 void draw_cube() {
+    
     glBegin(GL_QUADS);
         //glColor3f (0.5 , 0.5 , 0.5 ) ;
 
@@ -124,10 +125,10 @@ void draw_helix() {
     draw_objects(8, 0.8, 0.8, 0);
     glTranslatef(0, 1.7, 0);
     glScalef(0.75,0.75,0.75);
-    glRotatef(90, 1, 0, 0);
+    glRotatef(90, 1, 0, 0);//rotaciona o ventilador pro plano xy
 
-    HEX_ANGLE -= 1;
-    HEX_ANGLE %= 360;
+    HEX_ANGLE += 1;//gira um grau a cada redisplay
+    HEX_ANGLE %= 360;//mantém o angulo entre 0 e 360
     glRotatef(HEX_ANGLE, 0, 1, 0);//Gira no Y pq  ventilador original ta no plano XZ e não no XY
 
     draw_objects(7, 0.5, 0.2, 0.2);
