@@ -13,7 +13,7 @@
 #define WINDOW_WIDTH 1366
 #define WINDOW_HEIGHT 768
 
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 #define D(x) x
 #else
@@ -30,8 +30,8 @@ void* cam = NULL;
 
 
 
-
 void display();
+void setup_lighting();
 
 
 int main(int argc, char** argv) {
@@ -44,11 +44,15 @@ int main(int argc, char** argv) {
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
     glDepthFunc(GL_LEQUAL);
+    glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
     glDepthRange(0.0f, 1.0f);
 
     
-	glEnable( GL_TEXTURE_2D ); 
-
+	
+    //
+    setup_lighting();
+    glEnable(GL_COLOR_MATERIAL);
     
    
     cam = (Camera*)init_camera();
@@ -63,17 +67,24 @@ int main(int argc, char** argv) {
     load_obj_display("./models/sofa.obj", 6);
     load_obj_display("./models/ventilador/helice.obj", 7);
     load_obj_display("./models/ventilador/base_sem_helice3.obj", 8);
-    load_obj_display("./models/casa.obj", 9);
     load_obj_display("./models/janelaAberta.obj", 10);
     load_obj_display("./models/lixeira.obj", 11);
     load_obj_display("./models/portaAberta.obj", 12);
     load_obj_display("./models/portaFechada.obj", 13);
     load_obj_display("./models/janelaFechada.obj", 14);
     load_obj_display("./models/mesa.obj", 15);
-    load_obj_display("./models/quadroFaceTriangular.obj", 3);
+    load_obj_display("./models/quadro.obj", 3);
+    load_obj_display("./models/porta2.obj", 16);
+
+    load_obj_display("./models/casa/chao.obj", 17);
+    load_obj_display("./models/casa/teto.obj", 18);
+    load_obj_display("./models/casa/paredecomporta.obj", 19);
+    load_obj_display("./models/casa/paredecomum.obj", 20);
+    load_obj_display("./models/casa/paredecomjanela.obj", 21);
 
     load_texture("textures/quadro-vangogh.jpg", 0);
     load_texture("textures/container.jpg", 1);
+    load_texture("textures/pisoceramica.jpg", 2);
     
 
 
@@ -118,10 +129,9 @@ void display() {
 
         glPushMatrix();
         draw_axis_ticks();
-        glPopMatrix();)
+        glPopMatrix();
+    )
 
-    aply_texture(1);
-    //glTranslatef ( -10 , 0 , -10 ) ;
     //ventilador
     glPushMatrix();
     glTranslatef ( 70 ,48.5 , -30 ) ;
@@ -131,24 +141,21 @@ void display() {
     glPopMatrix();
 
     //casa
-    glPushMatrix();
-    glRotatef(180, 0, 1, 0);
-    draw_objects(9, 0.9, 0, 0);
-    glPopMatrix();
+    draw_house();
 
     //cadeira
     glPushMatrix();
     glTranslatef ( -10 , 0.7 , -50 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(0, 0.9, 0.9, 0);
+    draw_objects(0, 0.9, 0.9, 0, 0);
     glPopMatrix();
 
     //cama
     glPushMatrix();
     glTranslatef ( -80 ,4, 64 ) ;
     glScalef(7.0, 7.0, 7.0);
-    draw_objects(1, 0.9, 0.9, 0);
+    draw_objects(1, 0.9, 0.9, 0, 0);
     glPopMatrix();
 
     //copo
@@ -156,7 +163,7 @@ void display() {
     glTranslatef ( -13 , 15.8 , -65 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(2, 0.9, 0.9, 0);
+    draw_objects(2, 0.9, 0.9, 0, 0);
     glPopMatrix();
 
     //basquete
@@ -164,7 +171,7 @@ void display() {
     glTranslatef ( -78.2 ,30 , 1 ) ;
     glScalef(7.0,7.0, 7.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(4, 0.9, 0.9, 0);
+    draw_objects(4, 0.9, 0.9, 0, 0);
     glPopMatrix();
 
     //estante
@@ -173,7 +180,7 @@ void display() {
     glTranslatef ( 90 ,30 , -60 ) ;
     glRotatef(180, 0, 1, 0);
     glScalef(3.0, 3.0, 3.0);
-    draw_objects(5, 0.9, 0.9, 0);
+    draw_objects(5, 0.9, 0.9, 0, 0);
     glPopMatrix();
 
     //sofa
@@ -181,7 +188,7 @@ void display() {
     glTranslatef ( 15 , 0.7 , 70 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(180, 0, 1, 0);
-    draw_objects(6, 0.9, 0, 0.9);
+    draw_objects(6, 0.9, 0, 0.9, 0);
     glPopMatrix();
 
     //janela
@@ -191,9 +198,12 @@ void display() {
 
     //lixeira
     glPushMatrix();
-    glTranslatef ( 21 , 0 , -66 ) ;
+    glEnable( GL_TEXTURE_2D ); 
+    glTranslatef ( 26 , 1 , -66 ) ;
+    aply_texture(1);
     glScalef(2.0, 2.0, 2.0);
-    draw_objects(11, 0.9, 0, 0.9);
+    draw_objects(11, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D ); 
     glPopMatrix();
 
     //porta 
@@ -206,30 +216,43 @@ void display() {
     glTranslatef ( -15 , 0 , -73.5 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(15, 0.9, 0, 0.9);
+    draw_objects(15, 0.9, 0, 0.9, 0);
     glPopMatrix();
 
     //quadro
     glPushMatrix();
     glTranslatef ( 0 ,30 , -74.5 ) ;
     glScalef(1.5, 1.5, 1.5);
-    draw_objects(3, 0.1, 0.5, 0.8);
+    draw_objects(3, 0.1, 0.5, 0.8, 0);
     glPopMatrix();
 
     glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
     glTranslatef ( 1.75 ,30.5 , -71 ) ;
-    
     //Desenha a imagem que vai no quadro
     aply_texture(0);
     glScalef(10.0, 9.0, 1.0);
     draw_cube();
+    glDisable( GL_TEXTURE_2D ); 
     glPopMatrix();
-        
-
-      
     
     glFlush();
     glutSwapBuffers () ;
     glutPostRedisplay();
 }
 
+void setup_lighting()
+{  
+	float mat_specular[] = {1.0f, 1.0f, 1.0f};
+	float mat_shininess[] = {50.0f};
+	float light_ambient[] = {1.0f, 1.0f, 1.0f};
+	float light_position[] = {0.0f, 10.0f, 0.0f, 1.0f};
+	
+	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	//glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+}

@@ -16,7 +16,7 @@ void draw_axis_ticks();
 void draw_window();
 
 /*Desenha um objeto qualquer*/
-void draw_objects(int index, float r, float g, float b);
+void draw_objects(int index,  float r, float g, float b, int ap_texture);
 
 /*Desenha uma linha*/
 void draw_line(float x0, float y0, float z0, float x1, float y1, float z1);
@@ -32,6 +32,8 @@ void draw_helix();
 
 /*Desenha a porta dependendo do estado dela*/
 void draw_door();
+
+void draw_house();
 
 /*Muda o estado da porta entre aberta/fechada*/
 void change_door_state();
