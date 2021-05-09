@@ -16,7 +16,6 @@ int HEX_ANGLE = 0;
 int DOOR_OPEN = 0;
 int DOR_ROT = 0;
 
-float OFF_SET_COL = 0.1;
 
 TextureInfo** textures = NULL;
 
@@ -80,15 +79,17 @@ void draw_axis_ticks() {
 void draw_window() {
      if(WINDOW_OPEN) {
          //janela aberta
-        glTranslatef ( 28 , 30 , 65 ) ;
+        glTranslatef ( 28 , 30 , 63 ) ;
         glScalef(0.5, 0.7, 0.5);
         draw_objects(10, 0.8, 0.2, 0.2, 0);
      }
      else {
          //janela fechada
-        glTranslatef ( 28 , 30 , 65 ) ;
+        glTranslatef ( 28 , 30 , 63 ) ;
         glScalef(0.5, 0.7, 0.5);
         draw_objects(14, 0.8, 0.2, 0.2, 0);
+
+        //draw_objects(23, 0.8, 0.2, 0.2, 0);
      }
     
     
@@ -153,7 +154,7 @@ void draw_door() {
     else {
         //porta fechada
         glTranslatef ( -43 , 0.6 , -70.4 ) ;
-        glRotatef(DOR_ROT, 0, 1, 0);
+       // glRotatef(DOR_ROT, 0, 1, 0);
         DOR_ROT+=1;
         DOR_ROT%= 360;
         glScalef(0.75, 0.8, 1);
@@ -167,42 +168,57 @@ void draw_house() {
     /*----------chão--------------*/
     glPushMatrix();
     glEnable( GL_TEXTURE_2D ); 
+    glTranslatef(0, 0.5, 0);
     aply_texture(2);
-    draw_objects(17, 1, 1, 1, 0);
+    draw_objects(17, 1, 1, 1, 1);
     glDisable( GL_TEXTURE_2D );
     glPopMatrix();
     /*---------------------------*/
 
     /*----------teto--------------*/
     glPushMatrix();
-    glTranslatef(0, 71.5, 0);
-    draw_objects(18, 1, 1, 1, 0);
+    glTranslatef(0, 71, 0);
+    draw_objects(18, 1, 1, 1, 1);
     glPopMatrix();
     /*------------------------------*/
 
     /*Parede que tem a porta*/
     glPushMatrix();
-    glTranslatef(0, 0, 1);
-    glRotatef(180, 0, 1, 0);
-    draw_objects(19, 1, 1, 1, 0);
+    glEnable( GL_TEXTURE_2D ); 
+    aply_texture(3);
+    glTranslatef(0, 0, 1.5);
+    //glRotatef(180, 0, 1, 0);
+    draw_objects(19, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
     glPopMatrix();
     /*------------------------------*/
 
     /*--Paredes comuns----*/
     glPushMatrix();
-    draw_objects(20, 1, 1, 1, 0);
+    glEnable( GL_TEXTURE_2D ); 
+    aply_texture(3);
+    draw_objects(20, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
     glPopMatrix();
 
     glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
+    aply_texture(3);
     glRotatef(180, 0, 1, 0);
-    draw_objects(20, 1, 1, 1, 0);
+    draw_objects(20, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
     glPopMatrix();
     /*--------------------*/
 
     /*Parede que tem a janela*/
     glPushMatrix();
-    glRotatef(180, 0, 1, 0);
-    draw_objects(21, 1, 1, 1, 0);
+    glEnable( GL_TEXTURE_2D ); 
+    aply_texture(3);
+    
+    glTranslatef(0, 0, -0.5);
+    //glRotatef(180, 0, 1, 0);
+    draw_objects(21, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
     glPopMatrix();
 }
 
@@ -217,6 +233,7 @@ void change_window_state() {
 void draw_objects(int index,  float r, float g, float b, int ap_texture) {
     if(0 <= index < MODEL_QUANT) {
         int i;
+        float OFF_SET_COL = 0.1;
        
         VERTICES = vecs[index]->VERTICES;
         NORMALS = vecs[index]->NORMALS ;

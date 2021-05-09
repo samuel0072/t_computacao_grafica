@@ -18,7 +18,7 @@ void cross_v_u(float v[], float u[], float output[]);
 Camera* init_camera() {
     Camera* c = (Camera*)malloc(sizeof(Camera));
     c->p_x = 0;
-    c->p_y = 1;
+    c->p_y = 20;
     c->p_z = 1;
 
     c->n_x = 0;

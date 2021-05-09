@@ -76,15 +76,19 @@ int main(int argc, char** argv) {
     load_obj_display("./models/quadro.obj", 3);
     load_obj_display("./models/porta2.obj", 16);
 
+    
+
     load_obj_display("./models/casa/chao.obj", 17);
     load_obj_display("./models/casa/teto.obj", 18);
     load_obj_display("./models/casa/paredecomporta.obj", 19);
     load_obj_display("./models/casa/paredecomum.obj", 20);
     load_obj_display("./models/casa/paredecomjanela.obj", 21);
 
+
     load_texture("textures/quadro-vangogh.jpg", 0);
     load_texture("textures/container.jpg", 1);
     load_texture("textures/pisoceramica.jpg", 2);
+    load_texture("textures/papeldeparede1.jpg", 3);
     
 
 
@@ -100,8 +104,6 @@ int main(int argc, char** argv) {
 void display() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  
-    
-
     int i ;
 
 
@@ -213,9 +215,9 @@ void display() {
 
     //mesa
     glPushMatrix();
-    glTranslatef ( -15 , 0 , -73.5 ) ;
+    glTranslatef ( -15 , 0 , -72.5 ) ;
     glScalef(2.0, 2.0, 2.0);
-    glRotatef(90, 0, 1, 0);
+    glRotatef(-90, 0, 1, 0);
     draw_objects(15, 0.9, 0, 0.9, 0);
     glPopMatrix();
 
@@ -246,10 +248,10 @@ void setup_lighting()
 	float mat_specular[] = {1.0f, 1.0f, 1.0f};
 	float mat_shininess[] = {50.0f};
 	float light_ambient[] = {1.0f, 1.0f, 1.0f};
-	float light_position[] = {0.0f, 10.0f, 0.0f, 1.0f};
+	float light_position[] = {0.0f, 65.0f, 0.0f, 1.0f};
 	
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	//glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	
