@@ -57,10 +57,8 @@ int main(int argc, char** argv) {
     init_textures_vec();
 
     load_obj_display("./models/cadeira.obj", 0);
-    load_obj_display("./models/cama.obj", 1);
     load_obj_display("./models/caneca.obj", 2);
     load_obj_display("./models/basquete.obj", 4);
-    load_obj_display("./models/estanteDeLivros.obj", 5);
     load_obj_display("./models/sofa.obj", 6);
     load_obj_display("./models/ventilador/helice.obj", 7);
     load_obj_display("./models/ventilador/base_sem_helice3.obj", 8);
@@ -101,7 +99,7 @@ int main(int argc, char** argv) {
     load_texture("textures/papeldeparede1.jpg", 3);
     load_texture("textures/textura_cama.jpg", 4);
     load_texture("textures/textura_lencol.jpg", 5);
-    load_texture("textures/textura_travesseiro.jpg", 6);
+    load_texture("textures/textura_tecido_branco.jpg", 6);
     load_texture("textures/texturademadeira.jpg", 7);
     load_texture("textures/textura_livro.jpg", 8);
     
