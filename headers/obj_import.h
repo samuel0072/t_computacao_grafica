@@ -1,5 +1,5 @@
 #define MAX_VERTICES 200000
-#define MODEL_QUANT 16
+#define MODEL_QUANT 50
 
 typedef struct Vec2 Vec2;
 
