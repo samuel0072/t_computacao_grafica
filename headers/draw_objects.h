@@ -35,6 +35,10 @@ void draw_door();
 
 void draw_house();
 
+void draw_bed();
+
+void draw_bookcase();
+
 /*Muda o estado da porta entre aberta/fechada*/
 void change_door_state();
 

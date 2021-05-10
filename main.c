@@ -84,11 +84,29 @@ int main(int argc, char** argv) {
     load_obj_display("./models/casa/paredecomum.obj", 20);
     load_obj_display("./models/casa/paredecomjanela.obj", 21);
 
+    
+    load_obj_display("./models/janela/base.obj", 22);
+    load_obj_display("./models/janela/janela.obj", 23);
+    load_obj_display("./models/janela/janela2.obj", 24);
+
+    load_obj_display("./models/cama/cama.obj", 25);
+    load_obj_display("./models/cama/lencol.obj", 26);
+    load_obj_display("./models/cama/travesseiro.obj", 27);
+
+    
+    load_obj_display("./models/estante/estante.obj", 28);
+    load_obj_display("./models/estante/livro.obj", 29);
+
 
     load_texture("textures/quadro-vangogh.jpg", 0);
     load_texture("textures/container.jpg", 1);
     load_texture("textures/pisoceramica.jpg", 2);
     load_texture("textures/papeldeparede1.jpg", 3);
+    load_texture("textures/textura_cama.jpg", 4);
+    load_texture("textures/textura_lencol.jpg", 5);
+    load_texture("textures/textura_travesseiro.jpg", 6);
+    load_texture("textures/texturademadeira.jpg", 7);
+    load_texture("textures/textura_livro.jpg", 8);
     
 
 
@@ -155,9 +173,10 @@ void display() {
 
     //cama
     glPushMatrix();
-    glTranslatef ( -80 ,4, 64 ) ;
-    glScalef(7.0, 7.0, 7.0);
-    draw_objects(1, 0.9, 0.9, 0, 0);
+    //glTranslatef ( -80 ,4, 64 ) ;
+    //glScalef(7.0, 7.0, 7.0);
+    ////draw_objects(1, 0.9, 0.9, 0, 0);
+    draw_bed();
     glPopMatrix();
 
     //copo
@@ -179,10 +198,11 @@ void display() {
     //estante
     glPushMatrix();
     
-    glTranslatef ( 90 ,30 , -60 ) ;
-    glRotatef(180, 0, 1, 0);
-    glScalef(3.0, 3.0, 3.0);
-    draw_objects(5, 0.9, 0.9, 0, 0);
+    //glTranslatef ( 90 ,30 , -60 ) ;
+    //glRotatef(180, 0, 1, 0);
+    //glScalef(3.0, 3.0, 3.0);
+    //draw_objects(5, 0.9, 0.9, 0, 0);
+    draw_bookcase();
     glPopMatrix();
 
     //sofa
@@ -250,8 +270,8 @@ void setup_lighting()
 	float light_ambient[] = {1.0f, 1.0f, 1.0f};
 	float light_position[] = {0.0f, 65.0f, 0.0f, 1.0f};
 	
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
 	//glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	

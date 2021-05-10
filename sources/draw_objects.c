@@ -85,11 +85,23 @@ void draw_window() {
      }
      else {
          //janela fechada
+        glPushMatrix();
         glTranslatef ( 28 , 30 , 63 ) ;
         glScalef(0.5, 0.7, 0.5);
-        draw_objects(14, 0.8, 0.2, 0.2, 0);
+        draw_objects(22, 0.8, 0.2, 0.2, 0);
+        glPopMatrix();
 
-        //draw_objects(23, 0.8, 0.2, 0.2, 0);
+        glPushMatrix();
+        glTranslatef ( 28 , 30 , 63 ) ;
+        glScalef(0.5, 0.7, 0.5);
+        draw_objects(23, 0.8, 0.2, 0.2, 0);
+        glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef ( 28 , 30 , 63 ) ;
+        glScalef(0.5, 0.7, 0.5);
+        draw_objects(24, 0.8, 0.2, 0.2, 0);
+        glPopMatrix();
      }
     
     
@@ -219,6 +231,69 @@ void draw_house() {
     //glRotatef(180, 0, 1, 0);
     draw_objects(21, 1, 1, 1, 1);
     glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+}
+
+void draw_bed() {
+    /*cama*/
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
+    glTranslatef ( -80 ,4, 64 ) ;
+    glScalef(7.0, 7.0, 7.0);
+    aply_texture(4);
+    draw_objects(25, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+
+    /*lençol*/
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
+    glTranslatef ( -80 ,4, 64 ) ;
+    glScalef(7.0, 7.0, 7.0);
+    aply_texture(5);
+    draw_objects(26, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+
+    /*travesseiro*/
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
+    glTranslatef ( -80 ,4, 64 ) ;
+    glScalef(7.0, 7.0, 7.0);
+    aply_texture(6);
+    draw_objects(27, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+}
+
+void draw_bookcase() {
+    int i = 0;
+    /*estante*/
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
+    glTranslatef ( 90 ,30 , -60 ) ;
+    glRotatef(180, 0, 1, 0);
+    glScalef(3.0, 3.0, 3.0);
+    aply_texture(7);
+    draw_objects(28, 1, 1, 1, 1);
+    glDisable( GL_TEXTURE_2D );
+    glPopMatrix();
+
+    /*livros*/
+    glPushMatrix();
+    glEnable( GL_TEXTURE_2D ); 
+    glTranslatef ( 90 ,30 , -60 ) ;
+    aply_texture(8);
+    glRotatef(180, 0, 1, 0);
+    glScalef(3.0, 3.0, 3.0);
+    for(i = 0; i < 10; i++) {
+        glTranslatef (  0 ,0 , -2 ) ;
+        draw_objects(29, 1, 1, 1, 1);
+    }
+    draw_objects(29, 1, 1, 1, 1);
+    
+    glDisable( GL_TEXTURE_2D );
+    
     glPopMatrix();
 }
 
