@@ -238,27 +238,23 @@ void draw_bed() {
     /*cama*/
     glPushMatrix();
     glEnable( GL_TEXTURE_2D ); 
-    glTranslatef ( -80 ,4, 64 ) ;
+    glTranslatef ( -80 ,5, 64 ) ;
     glScalef(7.0, 7.0, 7.0);
     aply_texture(4);
     draw_objects(25, 1, 1, 1, 1);
-    glDisable( GL_TEXTURE_2D );
     glPopMatrix();
 
     /*lençol*/
     glPushMatrix();
-    glEnable( GL_TEXTURE_2D ); 
-    glTranslatef ( -80 ,4, 64 ) ;
+    glTranslatef ( -80 ,5.2, 64 ) ;
     glScalef(7.0, 7.0, 7.0);
     aply_texture(5);
     draw_objects(26, 1, 1, 1, 1);
-    glDisable( GL_TEXTURE_2D );
     glPopMatrix();
 
     /*travesseiro*/
     glPushMatrix();
-    glEnable( GL_TEXTURE_2D ); 
-    glTranslatef ( -80 ,4, 64 ) ;
+    glTranslatef ( -80 ,5.2, 64 ) ;
     glScalef(7.0, 7.0, 7.0);
     aply_texture(6);
     draw_objects(27, 1, 1, 1, 1);

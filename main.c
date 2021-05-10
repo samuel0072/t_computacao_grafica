@@ -154,7 +154,7 @@ void display() {
 
     //ventilador
     glPushMatrix();
-    glTranslatef ( 70 ,48.5 , -30 ) ;
+    glTranslatef ( 70 ,48.8 , -30 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 0.9, 0);
     draw_helix();
@@ -165,7 +165,7 @@ void display() {
 
     //cadeira
     glPushMatrix();
-    glTranslatef ( -10 , 0.7 , -50 ) ;
+    glTranslatef ( -10 , 1.7 , -50 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
     draw_objects(0, 0.9, 0.9, 0, 0);
@@ -173,9 +173,6 @@ void display() {
 
     //cama
     glPushMatrix();
-    //glTranslatef ( -80 ,4, 64 ) ;
-    //glScalef(7.0, 7.0, 7.0);
-    ////draw_objects(1, 0.9, 0.9, 0, 0);
     draw_bed();
     glPopMatrix();
 
@@ -197,17 +194,12 @@ void display() {
 
     //estante
     glPushMatrix();
-    
-    //glTranslatef ( 90 ,30 , -60 ) ;
-    //glRotatef(180, 0, 1, 0);
-    //glScalef(3.0, 3.0, 3.0);
-    //draw_objects(5, 0.9, 0.9, 0, 0);
     draw_bookcase();
     glPopMatrix();
 
     //sofa
     glPushMatrix();
-    glTranslatef ( 15 , 0.7 , 70 ) ;
+    glTranslatef ( 15 , 0.8 , 70 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(180, 0, 1, 0);
     draw_objects(6, 0.9, 0, 0.9, 0);
@@ -221,7 +213,7 @@ void display() {
     //lixeira
     glPushMatrix();
     glEnable( GL_TEXTURE_2D ); 
-    glTranslatef ( 26 , 1 , -66 ) ;
+    glTranslatef ( 26 , 1.5 , -66 ) ;
     aply_texture(1);
     glScalef(2.0, 2.0, 2.0);
     draw_objects(11, 1, 1, 1, 1);
@@ -235,7 +227,7 @@ void display() {
 
     //mesa
     glPushMatrix();
-    glTranslatef ( -15 , 0 , -72.5 ) ;
+    glTranslatef ( -15 , 1.5 , -72.5 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(-90, 0, 1, 0);
     draw_objects(15, 0.9, 0, 0.9, 0);
@@ -243,7 +235,7 @@ void display() {
 
     //quadro
     glPushMatrix();
-    glTranslatef ( 0 ,30 , -74.5 ) ;
+    glTranslatef ( 0 ,30 , -73.7 ) ;
     glScalef(1.5, 1.5, 1.5);
     draw_objects(3, 0.1, 0.5, 0.8, 0);
     glPopMatrix();
