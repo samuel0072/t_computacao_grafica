@@ -31,8 +31,6 @@ void* cam = NULL;
 
 
 void display();
-void setup_lighting();
-
 
 int main(int argc, char** argv) {
     
@@ -51,8 +49,7 @@ int main(int argc, char** argv) {
     
 	
     //
-    setup_lighting();
-    glEnable(GL_COLOR_MATERIAL);
+  
     
    
     cam = (Camera*)init_camera();
@@ -255,18 +252,3 @@ void display() {
     glutPostRedisplay();
 }
 
-void setup_lighting()
-{  
-	float mat_specular[] = {1.0f, 1.0f, 1.0f};
-	float mat_shininess[] = {50.0f};
-	float light_ambient[] = {1.0f, 1.0f, 1.0f};
-	float light_position[] = {0.0f, 65.0f, 0.0f, 1.0f};
-	
-	//glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-}
