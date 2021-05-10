@@ -5,6 +5,9 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
+#define CW -1
+#define ACW 1
+
 struct TextureInfo {
     unsigned int textureID;
 };
@@ -13,8 +16,8 @@ struct TextureInfo {
 int WINDOW_OPEN = 0;//flag para abrir a janela
 int HEX_ANGLE = 0;
 
-int DOOR_OPEN = 0;
-int DOR_ROT = 0;
+int DOOR_ROT = 0;
+int DOOR_ROT_DIR = CW;
 
 
 TextureInfo** textures = NULL;
@@ -157,22 +160,11 @@ void draw_helix() {
 }
 
 void draw_door() {
-    if(DOOR_OPEN) {
-        //aberta
-        glTranslatef ( -43 , 0.6 , -59.4 ) ;
-        glScalef(1, 0.8, 0.75);
-        draw_objects(12, 0.7, 0.1, 0.9, 0);
-    }
-    else {
-        //porta fechada
-        glTranslatef ( -43 , 0.6 , -70.4 ) ;
-       // glRotatef(DOR_ROT, 0, 1, 0);
-        DOR_ROT+=1;
-        DOR_ROT%= 360;
-        glScalef(0.75, 0.8, 1);
+        glTranslatef ( -43 , 0.6 , -72 ) ;
+        glRotatef(DOOR_ROT, 0, 1, 0);//gira a porta conforme foi aberta/fechada
+        
+        glScalef(0.70, 0.8, 1);
         draw_objects(13, 0.7, 0.1, 0.9, 0);
-
-    }
     
 }
 
@@ -294,7 +286,12 @@ void draw_bookcase() {
 }
 
 void change_door_state() {
-    DOOR_OPEN = !DOOR_OPEN;
+    //controla quanto a porta fecha/abre
+    if(DOOR_ROT == 90 || DOOR_ROT == 0) {//aberta ou fechada
+        DOOR_ROT_DIR = -DOOR_ROT_DIR;
+    }
+    DOOR_ROT += DOOR_ROT_DIR;
+    DOOR_ROT%= 360;
 }
 
 void change_window_state() {
