@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include <stdio.h>
 
+//sentido de rotação dos objetos, clockwise, anticlockwise
 #define CW -1
 #define ACW 1
 
@@ -12,8 +13,9 @@ struct TextureInfo {
     unsigned int textureID;
 };
 
+int WIN_ROT = 0;
+int WIN_ROT_DIR = CW;
 
-int WINDOW_OPEN = 0;//flag para abrir a janela
 int HEX_ANGLE = 0;
 
 int DOOR_ROT = 0;
@@ -80,32 +82,30 @@ void draw_axis_ticks() {
 
 
 void draw_window() {
-     if(WINDOW_OPEN) {
-         //janela aberta
-        glTranslatef ( 28 , 30 , 63 ) ;
-        glScalef(0.5, 0.7, 0.5);
-        draw_objects(10, 0.8, 0.2, 0.2, 0);
-     }
-     else {
-         //janela fechada
-        glPushMatrix();
-        glTranslatef ( 28 , 30 , 63 ) ;
-        glScalef(0.5, 0.7, 0.5);
-        draw_objects(22, 0.8, 0.2, 0.2, 0);
-        glPopMatrix();
 
-        glPushMatrix();
-        glTranslatef ( 28 , 30 , 63 ) ;
-        glScalef(0.5, 0.7, 0.5);
-        draw_objects(23, 0.8, 0.2, 0.2, 0);
-        glPopMatrix();
+        
+    //base
+    glPushMatrix();
+    glTranslatef ( 28 , 30 , 63 ) ;
+    glScalef(0.5, 0.7, 0.5);
+    draw_objects(22, 0.8, 0.2, 0.2, 0);
+    glPopMatrix();
 
-        glPushMatrix();
-        glTranslatef ( 28 , 30 , 63 ) ;
-        glScalef(0.5, 0.7, 0.5);
-        draw_objects(24, 0.8, 0.2, 0.2, 0);
-        glPopMatrix();
-     }
+    //janela2
+    glPushMatrix();
+    glTranslatef ( 63 , 30 , 70 ) ;
+    glScalef(0.5, 0.7, 0.5);
+    glRotatef(-WIN_ROT, 0, 1, 0);//Objeto espelhados com janela, daí gira no sentido inverso
+    draw_objects(24, 0.8, 0.2, 0.2, 0);
+    glPopMatrix();
+
+    //janela
+    glPushMatrix();
+    glTranslatef ( 30 , 30 , 70 ) ;
+    glScalef(0.5, 0.7, 0.5);
+    glRotatef(WIN_ROT, 0, 1, 0);
+    draw_objects(23, 0.8, 0.2, 0.2, 0);
+    glPopMatrix();
     
     
 }
@@ -295,7 +295,11 @@ void change_door_state() {
 }
 
 void change_window_state() {
-    WINDOW_OPEN = !WINDOW_OPEN;
+    //controla quanto a janela fecha/abre
+    if(WIN_ROT == 90 || WIN_ROT == 0) {//aberta ou fechada
+        WIN_ROT_DIR = -WIN_ROT_DIR; 
+    }
+    WIN_ROT += WIN_ROT_DIR;
 }
 
 void draw_objects(int index,  float r, float g, float b, int ap_texture) {
