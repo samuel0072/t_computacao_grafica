@@ -80,7 +80,6 @@ void draw_axis_ticks() {
     }
 }
 
-
 void draw_window() {
 
         
@@ -88,7 +87,7 @@ void draw_window() {
     glPushMatrix();
     glTranslatef ( 28 , 30 , 63 ) ;
     glScalef(0.5, 0.7, 0.5);
-    draw_objects(22, 0.8, 0.2, 0.2, 0);
+    draw_objects(22, 0.8, 0.2, 0.2, 1);
     glPopMatrix();
 
     //janela2
@@ -96,7 +95,7 @@ void draw_window() {
     glTranslatef ( 63 , 30 , 70 ) ;
     glScalef(0.5, 0.7, 0.5);
     glRotatef(-WIN_ROT, 0, 1, 0);//Objeto espelhados com janela, daí gira no sentido inverso
-    draw_objects(24, 0.8, 0.2, 0.2, 0);
+    draw_objects(24, 0.8, 0.2, 0.2, 1);
     glPopMatrix();
 
     //janela
@@ -104,7 +103,7 @@ void draw_window() {
     glTranslatef ( 30 , 30 , 70 ) ;
     glScalef(0.5, 0.7, 0.5);
     glRotatef(WIN_ROT, 0, 1, 0);
-    draw_objects(23, 0.8, 0.2, 0.2, 0);
+    draw_objects(23, 0.8, 0.2, 0.2, 1);
     glPopMatrix();
     
     
@@ -145,7 +144,7 @@ void draw_cube() {
 
 void draw_helix() {
     //glScalef(5.0,5.0,5.0);
-    draw_objects(8, 0.8, 0.8, 0, 0);
+    draw_objects(8, 0.8, 0.8, 0, 1);
     glTranslatef(0, 1.7, 0);
     glScalef(0.75,0.75,0.75);
     glRotatef(90, 1, 0, 0);//rotaciona o ventilador pro plano xy
@@ -154,7 +153,7 @@ void draw_helix() {
     HEX_ANGLE %= 360;//mantém o angulo entre 0 e 360
     glRotatef(HEX_ANGLE, 0, 1, 0);//Gira no Y pq  ventilador original ta no plano XZ e não no XY
 
-    draw_objects(7, 0.5, 0.2, 0.2, 0);
+    draw_objects(7, 0.5, 0.2, 0.2, 1);
     
     
 }
@@ -164,7 +163,7 @@ void draw_door() {
         glRotatef(DOOR_ROT, 0, 1, 0);//gira a porta conforme foi aberta/fechada
         
         glScalef(0.70, 0.8, 1);
-        draw_objects(13, 0.7, 0.1, 0.9, 0);
+        draw_objects(13, 0.7, 0.1, 0.9, 1);
     
 }
 
@@ -230,7 +229,7 @@ void draw_bed() {
     /*cama*/
     glPushMatrix();
     glEnable( GL_TEXTURE_2D ); 
-    glTranslatef ( -80 ,5, 64 ) ;
+    glTranslatef ( -80 ,5, 63 ) ;
     glScalef(7.0, 7.0, 7.0);
     aply_texture(4);
     draw_objects(25, 1, 1, 1, 1);
@@ -238,7 +237,7 @@ void draw_bed() {
 
     /*lençol*/
     glPushMatrix();
-    glTranslatef ( -80 ,5.2, 64 ) ;
+    glTranslatef ( -80 ,5.2, 63 ) ;
     glScalef(7.0, 7.0, 7.0);
     aply_texture(5);
     draw_objects(26, 1, 1, 1, 1);
@@ -246,7 +245,7 @@ void draw_bed() {
 
     /*travesseiro*/
     glPushMatrix();
-    glTranslatef ( -80 ,5.2, 64 ) ;
+    glTranslatef ( -80 ,5.2, 63 ) ;
     glScalef(7.0, 7.0, 7.0);
     aply_texture(6);
     draw_objects(27, 1, 1, 1, 1);

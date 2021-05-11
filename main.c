@@ -32,6 +32,8 @@ void* cam = NULL;
 
 void display();
 
+void setup_lighting();
+
 int main(int argc, char** argv) {
     
     glutInit(&argc, argv);
@@ -46,30 +48,32 @@ int main(int argc, char** argv) {
 	glCullFace(GL_BACK);
     glDepthRange(0.0f, 1.0f);
 
-    
-	
-    //
-  
-    
+
+    setup_lighting();
    
     cam = (Camera*)init_camera();
     init_obj_vecs();
     init_textures_vec();
 
     load_obj_display("./models/cadeira.obj", 0);
+
     load_obj_display("./models/caneca.obj", 2);
+
     load_obj_display("./models/basquete.obj", 4);
+
     load_obj_display("./models/sofa.obj", 6);
+
     load_obj_display("./models/ventilador/helice.obj", 7);
-    load_obj_display("./models/ventilador/base_sem_helice3.obj", 8);
-    load_obj_display("./models/janelaAberta.obj", 10);
+    load_obj_display("./models/ventilador/base_sem_helice.obj", 8);
+
     load_obj_display("./models/lixeira.obj", 11);
-    load_obj_display("./models/portaAberta.obj", 12);
+
     load_obj_display("./models/portaFechada.obj", 13);
+
     load_obj_display("./models/janelaFechada.obj", 14);
+
     load_obj_display("./models/mesa.obj", 15);
     load_obj_display("./models/quadro.obj", 3);
-    load_obj_display("./models/porta2.obj", 16);
 
     
 
@@ -91,6 +95,8 @@ int main(int argc, char** argv) {
     
     load_obj_display("./models/estante/estante.obj", 28);
     load_obj_display("./models/estante/livro.obj", 29);
+
+    load_obj_display("./models/luminaria.obj", 30);
 
 
     load_texture("textures/quadro-vangogh.jpg", 0);
@@ -145,7 +151,14 @@ void display() {
         glPushMatrix();
         draw_axis_ticks();
         glPopMatrix();
+
+        glPushMatrix();
+        glTranslatef(20 , 25 , -61);
+        glutSolidSphere(1.0, 50, 50);
+
+        glPopMatrix();
     )
+    
 
     //ventilador
     glPushMatrix();
@@ -163,7 +176,7 @@ void display() {
     glTranslatef ( -10 , 1.7 , -50 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(0, 0.9, 0.9, 0, 0);
+    draw_objects(0, 0.9, 0.9, 0, 1);
     glPopMatrix();
 
     //cama
@@ -176,7 +189,7 @@ void display() {
     glTranslatef ( -13 , 15.8 , -65 ) ;
     glScalef(4.0, 4.0, 4.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(2, 0.9, 0.9, 0, 0);
+    draw_objects(2, 0.9, 0.9, 0, 1);
     glPopMatrix();
 
     //basquete
@@ -184,7 +197,7 @@ void display() {
     glTranslatef ( -78.2 ,30 , 1 ) ;
     glScalef(7.0,7.0, 7.0);
     glRotatef(90, 0, 1, 0);
-    draw_objects(4, 0.9, 0.9, 0, 0);
+    draw_objects(4, 1, 1, 0, 1);
     glPopMatrix();
 
     //estante
@@ -197,7 +210,7 @@ void display() {
     glTranslatef ( 15 , 0.8 , 70 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(180, 0, 1, 0);
-    draw_objects(6, 0.9, 0, 0.9, 0);
+    draw_objects(6, 0.9, 0, 0.9, 1);
     glPopMatrix();
 
     //janela
@@ -225,7 +238,15 @@ void display() {
     glTranslatef ( -15 , 1.5 , -72.5 ) ;
     glScalef(2.0, 2.0, 2.0);
     glRotatef(-90, 0, 1, 0);
-    draw_objects(15, 0.9, 0, 0.9, 0);
+    draw_objects(15, 0.9, 0, 0.9, 1);
+    glPopMatrix();
+
+    //luminaria
+    glPushMatrix();
+    glTranslatef ( 20 , 15 , -62 ) ;
+    glScalef(7.0, 7.0, 7.0);
+   // glRotatef(-90, 0, 1, 0);
+    draw_objects(30, 1, 0, 0, 1);
     glPopMatrix();
 
     //quadro
@@ -250,3 +271,37 @@ void display() {
     glutPostRedisplay();
 }
 
+void setup_lighting() {
+    float mat_specular[] = {1.0f, 1.0f, 1.0f};//branco
+	float mat_shininess[] = {50.0f};
+	float light_position[] = {0.0f, 65.0f, 0.0f, 1.0f};
+    float light_diffuse [] = {1.0f , 1.0f , 1.0f }; // Luz branca
+
+    glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess);
+	
+	//luminaria
+    glMaterialfv(GL_LIGHT1 , GL_SPECULAR , mat_specular);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position);
+    glLightfv ( GL_LIGHT1 , GL_DIFFUSE , light_diffuse ) ;
+
+    //spot
+
+    float spot_direction [] = {-0.7f , -0.3f , 0.0f };
+    float spot_cutoff [] = {15.0f };
+    float spot_specular[] = {1.0f, 1.0f, 0.0f};//amarelo
+    float spot_position[] = {20 , 25 , -61, 1.0 };
+    float spot_difuse[] = {1.0, 1.0, 0.0};
+
+    glMaterialfv(GL_LIGHT0 , GL_SPECULAR , spot_specular);
+    glLightfv ( GL_LIGHT0 , GL_DIFFUSE , spot_difuse ) ;
+
+    glLightfv(GL_LIGHT0, GL_POSITION, spot_position);
+    glLightfv ( GL_LIGHT0 , GL_SPOT_DIRECTION , spot_direction ) ;
+    glLightfv ( GL_LIGHT0 , GL_SPOT_CUTOFF , spot_cutoff ) ;
+	
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+    glEnable(GL_LIGHT1);
+    
+    glEnable(GL_COLOR_MATERIAL);
+}
