@@ -18,9 +18,24 @@ Referências:
 - Link pro vídeo: [Projeto CG AB1](https://www.youtube.com/watch?v=tUBvlIbN5RY)
 
 ### Imagens
-<img src="results/ab1_result1.png" width="400" height="300">
-<img src="results/ab1_result2.png" width="400" height="300">
-<img src="results/ab1_result3.png" width="400" height="300">
-<img src="results/ab1_result4.png" width="400" height="300">
-<img src="results/ab1_result5.png" width="400" height="300">
-<img src="results/ab1_result6.png" width="400" height="300">
+<img src="results/ab1_result1.png" width="300" height="300">
+<img src="results/ab1_result2.png" width="300" height="300">
+<img src="results/ab1_result3.png" width="300" height="300">
+<img src="results/ab1_result4.png" width="300" height="300">
+<img src="results/ab1_result5.png" width="300" height="300">
+<img src="results/ab1_result6.png" width="300" height="300">
+
+## Resultado AB2:
+
+- Link pro vídeo: [CG - QUARTO AB2](https://www.youtube.com/watch?v=cesUJXiJM7I)
+
+### Imagens
+
+<img src="results/resultado_ab2_1.png" width="300" height="300">
+<img src="results/resultado_ab2_2.png" width="300" height="300">
+<img src="results/resultado_ab2_3.png" width="300" height="300">
+<img src="results/resultado_ab2_4.png" width="300" height="300">
+<img src="results/resultado_ab2_5.png" width="300" height="300">
+<img src="results/resultado_ab2_6.png" width="300" height="300">
+<img src="results/resultado_ab2_7.png" width="300" height="300">
+<img src="results/resultado_ab2_8.png" width="300" height="300">
