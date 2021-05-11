@@ -97,6 +97,7 @@ int main(int argc, char** argv) {
     load_obj_display("./models/estante/livro.obj", 29);
 
     load_obj_display("./models/luminaria.obj", 30);
+    load_obj_display("./models/luminaria2.obj", 31);
 
 
     load_texture("textures/quadro-vangogh.jpg", 0);
@@ -247,6 +248,13 @@ void display() {
     glScalef(7.0, 7.0, 7.0);
    // glRotatef(-90, 0, 1, 0);
     draw_objects(30, 1, 0, 0, 1);
+    glPopMatrix();
+
+    //luminaria2
+    glPushMatrix();
+    glTranslatef ( 0 , 68 , 0 ) ;
+    glScalef(7.0, 7.0, 7.0);
+    draw_objects(31, 1, 1, 1, 1);
     glPopMatrix();
 
     //quadro
